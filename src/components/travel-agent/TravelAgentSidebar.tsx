@@ -34,12 +34,6 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow
     { id: 'saved-2', title: 'Europe Summer Tour', date: '1 week ago' },
   ];
 
-  // Demo alerts for travelers
-  const travelerAlertItems = [
-    { id: 'alert-1', title: 'Price Drop: NYC Flight', date: '1 day ago' },
-    { id: 'alert-2', title: 'Hotel Deal in Barcelona', date: '3 days ago' },
-  ];
-
   // Demo seller items
   const sellerListingItems = [
     { id: 'listing-1', title: 'London-Paris Flight', date: '3 days ago' },
@@ -100,7 +94,7 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow
         {/* Conditional section based on user mode */}
         <SidebarGroup>
           <SidebarGroupLabel>
-            {isSellMode ? 'Saved Listings' : 'Saved Trips & Alerts'}
+            {isSellMode ? 'Saved Listings' : 'Saved Trips'}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -115,38 +109,15 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow
                   </SidebarMenuItem>
                 ))
               ) : (
-                // Traveler saved trips and alerts
-                <>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton>
+                // Traveler saved trips
+                travelerSavedItems.map((item) => (
+                  <SidebarMenuItem key={item.id}>
+                    <SidebarMenuButton tooltip={item.date}>
                       <BookmarkCheck className="h-4 w-4" />
-                      <span className="font-medium">Saved Trips</span>
+                      <span>{item.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  {travelerSavedItems.map((item) => (
-                    <SidebarMenuItem key={item.id}>
-                      <SidebarMenuButton tooltip={item.date} className="pl-6">
-                        <BookmarkCheck className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                  
-                  <SidebarMenuItem className="mt-2">
-                    <SidebarMenuButton>
-                      <BookmarkCheck className="h-4 w-4" />
-                      <span className="font-medium">Price Alerts</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {travelerAlertItems.map((item) => (
-                    <SidebarMenuItem key={item.id}>
-                      <SidebarMenuButton tooltip={item.date} className="pl-6">
-                        <BookmarkCheck className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </>
+                ))
               )}
             </SidebarMenu>
           </SidebarGroupContent>

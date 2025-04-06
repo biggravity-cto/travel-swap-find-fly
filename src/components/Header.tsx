@@ -18,7 +18,7 @@ const Header = () => {
               <Link to="/flights" className="nav-link font-medium">Flights</Link>
               <Link to="/hotels" className="nav-link font-medium">Hotels</Link>
               <Link to="/packages" className="nav-link font-medium">Packages</Link>
-              <Link to="/marketplace" className="nav-link font-medium">Resale Marketplace</Link>
+              <Link to="/marketplace" className="nav-link font-medium">Travel Marketplace</Link>
             </nav>
           </div>
           
@@ -53,7 +53,7 @@ const Header = () => {
                   <Link to="/flights" className="text-lg font-medium">Flights</Link>
                   <Link to="/hotels" className="text-lg font-medium">Hotels</Link>
                   <Link to="/packages" className="text-lg font-medium">Packages</Link>
-                  <Link to="/marketplace" className="text-lg font-medium">Resale Marketplace</Link>
+                  <Link to="/marketplace" className="text-lg font-medium">Travel Marketplace</Link>
                   <Link to="/travel-agent" className="text-lg font-medium text-tt-blue">AI Travel Agent</Link>
                   <Link to="/sell" className="w-full mt-4">
                     <Button className="w-full">Sell Your Travel</Button>

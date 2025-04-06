@@ -28,9 +28,9 @@ const TravelAgent = () => {
       <Header />
       
       <div className="flex-grow overflow-hidden flex flex-col">
-        <div className="container-custom">
+        <div className="container-custom py-2">
           <Link to="/">
-            <Button variant="ghost" className="mt-4 mb-2 text-tt-blue hover:text-tt-blue-dark">
+            <Button variant="ghost" className="text-tt-blue hover:text-tt-blue-dark">
               <ChevronLeft size={16} className="mr-1" /> Back to homepage
             </Button>
           </Link>
