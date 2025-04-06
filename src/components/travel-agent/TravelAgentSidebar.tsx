@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessageSquare, History, User, LogIn, Github, Mail, Phone } from 'lucide-react';
+import { MessageSquare, History, User, LogIn, Github, Mail, Phone, BookmarkCheck, Tag } from 'lucide-react';
 import { 
   SidebarHeader,
   SidebarContent,
@@ -17,14 +17,34 @@ import { PromptSuggestion } from './types';
 
 interface TravelAgentSidebarProps {
   startPromptFlow: (prompt: PromptSuggestion) => void;
+  isSellMode: boolean;
 }
 
-const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow }) => {
-  // Demo chat history items
-  const chatHistoryItems = [
+const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow, isSellMode }) => {
+  // Demo chat history items for travelers
+  const travelerHistoryItems = [
     { id: 'chat-1', title: 'Paris Trip Planning', date: '2 days ago' },
     { id: 'chat-2', title: 'Tokyo Business Trip', date: '1 week ago' },
     { id: 'chat-3', title: 'Bali Family Vacation', date: '2 weeks ago' },
+  ];
+
+  // Demo saved items for travelers
+  const travelerSavedItems = [
+    { id: 'saved-1', title: 'Hawaii Trip', date: '3 days ago' },
+    { id: 'saved-2', title: 'Europe Summer Tour', date: '1 week ago' },
+  ];
+
+  // Demo alerts for travelers
+  const travelerAlertItems = [
+    { id: 'alert-1', title: 'Price Drop: NYC Flight', date: '1 day ago' },
+    { id: 'alert-2', title: 'Hotel Deal in Barcelona', date: '3 days ago' },
+  ];
+
+  // Demo seller items
+  const sellerListingItems = [
+    { id: 'listing-1', title: 'London-Paris Flight', date: '3 days ago' },
+    { id: 'listing-2', title: 'Cancun Resort Stay', date: '5 days ago' },
+    { id: 'listing-3', title: 'Amsterdam City Break', date: '1 week ago' },
   ];
 
   return (
@@ -32,7 +52,9 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow
       <SidebarHeader>
         <div className="flex items-center px-2 py-1">
           <MessageSquare className="mr-2 h-5 w-5 text-tt-blue" />
-          <h2 className="text-lg font-semibold text-tt-blue">AI Travel Agent</h2>
+          <h2 className="text-lg font-semibold text-tt-blue">
+            {isSellMode ? 'AI Resell Agent' : 'AI Travel Agent'}
+          </h2>
         </div>
       </SidebarHeader>
       
@@ -48,18 +70,88 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({ startPromptFlow
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
-              {chatHistoryItems.map((chat) => (
-                <SidebarMenuItem key={chat.id}>
-                  <SidebarMenuButton tooltip={chat.date}>
-                    <History className="h-4 w-4" />
-                    <span>{chat.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {isSellMode ? (
+                // Seller history items
+                sellerListingItems.map((chat) => (
+                  <SidebarMenuItem key={chat.id}>
+                    <SidebarMenuButton tooltip={chat.date}>
+                      <History className="h-4 w-4" />
+                      <span>{chat.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              ) : (
+                // Traveler history items
+                travelerHistoryItems.map((chat) => (
+                  <SidebarMenuItem key={chat.id}>
+                    <SidebarMenuButton tooltip={chat.date}>
+                      <History className="h-4 w-4" />
+                      <span>{chat.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
         
+        <SidebarSeparator />
+        
+        {/* Conditional section based on user mode */}
+        <SidebarGroup>
+          <SidebarGroupLabel>
+            {isSellMode ? 'Saved Listings' : 'Saved Trips & Alerts'}
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {isSellMode ? (
+                // Seller saved listings
+                sellerListingItems.map((item) => (
+                  <SidebarMenuItem key={`saved-${item.id}`}>
+                    <SidebarMenuButton tooltip={item.date}>
+                      <Tag className="h-4 w-4" />
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              ) : (
+                // Traveler saved trips and alerts
+                <>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      <BookmarkCheck className="h-4 w-4" />
+                      <span className="font-medium">Saved Trips</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {travelerSavedItems.map((item) => (
+                    <SidebarMenuItem key={item.id}>
+                      <SidebarMenuButton tooltip={item.date} className="pl-6">
+                        <BookmarkCheck className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                  
+                  <SidebarMenuItem className="mt-2">
+                    <SidebarMenuButton>
+                      <BookmarkCheck className="h-4 w-4" />
+                      <span className="font-medium">Price Alerts</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {travelerAlertItems.map((item) => (
+                    <SidebarMenuItem key={item.id}>
+                      <SidebarMenuButton tooltip={item.date} className="pl-6">
+                        <BookmarkCheck className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </>
+              )}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         <SidebarSeparator />
         
         <SidebarGroup>

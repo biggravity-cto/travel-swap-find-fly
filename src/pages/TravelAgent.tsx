@@ -40,7 +40,10 @@ const TravelAgent = () => {
           <div className="flex flex-1 overflow-hidden">
             {/* Left Sidebar */}
             <Sidebar className="overflow-y-auto">
-              <TravelAgentSidebar startPromptFlow={startPromptFlow} />
+              <TravelAgentSidebar 
+                startPromptFlow={startPromptFlow} 
+                isSellMode={isSellMode}
+              />
             </Sidebar>
             
             {/* Main Chat Area */}

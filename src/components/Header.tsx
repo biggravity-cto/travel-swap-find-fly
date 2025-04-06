@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, User, Menu } from 'lucide-react';
+import { User, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
@@ -29,10 +29,6 @@ const Header = () => {
             >
               AI Travel Agent
             </Link>
-            
-            <Button variant="ghost" size="icon" className="text-tt-gray-dark">
-              <Bell size={20} />
-            </Button>
             
             <div className="hidden md:block">
               <Link to="/sell">
