@@ -11,13 +11,20 @@ interface SearchFormProps {
 }
 
 const SearchForm = ({ initialTab = 'flights' }: SearchFormProps) => {
-  const [searchType, setSearchType] = useState(initialTab);
+  const [searchType, setSearchType] = useState<'flights' | 'hotels' | 'packages'>(initialTab);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   
+  const handleValueChange = (value: string) => {
+    // This ensures we only set valid values to our state
+    if (value === 'flights' || value === 'hotels' || value === 'packages') {
+      setSearchType(value);
+    }
+  };
+  
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
-      <Tabs value={searchType} onValueChange={setSearchType}>
+      <Tabs value={searchType} onValueChange={handleValueChange}>
         <div className="flex items-center justify-between mb-6">
           <SearchTabs searchType={searchType} />
         </div>
