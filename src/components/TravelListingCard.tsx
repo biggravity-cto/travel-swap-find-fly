@@ -13,7 +13,8 @@ interface TravelListingCardProps {
   departureDate: string;
   duration: string;
   passengers: number;
-  isResale?: boolean;
+  source?: string; // New prop to indicate source (TransferTravel, Expedia, Booking.com, etc.)
+  sourceLogo?: string; // Optional logo URL for the source
   savingsPercentage?: number;
   className?: string;
 }
@@ -27,7 +28,8 @@ const TravelListingCard = ({
   departureDate,
   duration,
   passengers,
-  isResale = false,
+  source = 'TransferTravel', // Default source
+  sourceLogo,
   savingsPercentage,
   className
 }: TravelListingCardProps) => {
@@ -36,11 +38,19 @@ const TravelListingCard = ({
       <div className="relative h-48 overflow-hidden">
         <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div className="absolute top-3 left-3">
-          {isResale ? (
-            <Badge className="bg-tt-yellow hover:bg-tt-yellow text-tt-black font-medium">Resale</Badge>
-          ) : (
-            <Badge className="bg-tt-teal hover:bg-tt-teal font-medium">Standard</Badge>
-          )}
+          <Badge 
+            className={cn(
+              "font-medium",
+              source === 'TransferTravel' 
+                ? "bg-tt-yellow hover:bg-tt-yellow text-tt-black" 
+                : "bg-tt-teal hover:bg-tt-teal"
+            )}
+          >
+            {sourceLogo && (
+              <img src={sourceLogo} alt={source} className="w-4 h-4 mr-1" />
+            )}
+            {source}
+          </Badge>
         </div>
         {savingsPercentage && (
           <div className="absolute top-3 right-3">

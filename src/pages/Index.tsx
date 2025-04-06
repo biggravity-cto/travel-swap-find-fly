@@ -6,9 +6,9 @@ import SearchForm from '@/components/SearchForm';
 import TravelListingCard from '@/components/TravelListingCard';
 import DestinationCard from '@/components/DestinationCard';
 import SellTravelCTA from '@/components/SellTravelCTA';
+import AITravelAgent from '@/components/AITravelAgent';
 import { ArrowRight, Tag, Clock, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
   // Placeholder data
@@ -19,7 +19,8 @@ const Index = () => {
     { name: "Tokyo", image: "https://images.unsplash.com/photo-1570521462033-3015e76e7432?q=80&w=2071&auto=format&fit=crop", dealCount: 165, resaleCount: 27 },
   ];
 
-  const featuredResaleListings = [
+  // Mixed listings of resales and OTA offerings
+  const featuredListings = [
     {
       title: "7-Night Stay at The Ritz-Carlton",
       location: "Miami, Florida",
@@ -29,7 +30,7 @@ const Index = () => {
       departureDate: "Jul 15, 2025",
       duration: "7 nights",
       passengers: 2,
-      isResale: true,
+      source: "TransferTravel",
       savingsPercentage: 34
     },
     {
@@ -41,7 +42,8 @@ const Index = () => {
       departureDate: "Aug 5, 2025",
       duration: "4 days",
       passengers: 1,
-      isResale: true,
+      source: "Expedia",
+      sourceLogo: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Expedia_2022.svg", 
       savingsPercentage: 37
     },
     {
@@ -53,12 +55,9 @@ const Index = () => {
       departureDate: "Sep 10, 2025",
       duration: "5 nights",
       passengers: 2,
-      isResale: true,
+      source: "TransferTravel",
       savingsPercentage: 33
     },
-  ];
-
-  const standardListings = [
     {
       title: "Return Flight to Paris",
       location: "London to Paris",
@@ -66,7 +65,9 @@ const Index = () => {
       price: 115,
       departureDate: "Aug 14, 2025",
       duration: "3 days",
-      passengers: 1
+      passengers: 1,
+      source: "Booking.com",
+      sourceLogo: "https://upload.wikimedia.org/wikipedia/commons/6/66/Booking.com_2021.svg"
     },
     {
       title: "Boutique Hotel Stay",
@@ -75,7 +76,8 @@ const Index = () => {
       price: 450,
       departureDate: "Jul 25, 2025",
       duration: "4 nights",
-      passengers: 2
+      passengers: 2,
+      source: "TransferTravel"
     },
     {
       title: "City Break Package",
@@ -84,7 +86,9 @@ const Index = () => {
       price: 680,
       departureDate: "Sep 2, 2025",
       duration: "3 nights",
-      passengers: 2
+      passengers: 2,
+      source: "Skyscanner",
+      sourceLogo: "https://upload.wikimedia.org/wikipedia/commons/8/81/Skyscanner_Logo_2019.svg"
     },
   ];
 
@@ -146,8 +150,20 @@ const Index = () => {
           </div>
         </section>
         
-        {/* Featured Listings */}
+        {/* AI Travel Agent */}
         <section className="py-16 md:py-24 bg-gray-50">
+          <div className="container-custom">
+            <div className="mb-10">
+              <h2 className="text-2xl md:text-3xl font-display font-semibold mb-2">Your Personal AI Travel Agent</h2>
+              <p className="text-tt-gray-dark">Let our smart assistant help you find the perfect trip and uncover exclusive rewards</p>
+            </div>
+            
+            <AITravelAgent />
+          </div>
+        </section>
+        
+        {/* Featured Listings - Combined with no tabs */}
+        <section className="py-16 md:py-24">
           <div className="container-custom">
             <div className="flex justify-between items-end mb-10">
               <div>
@@ -156,68 +172,36 @@ const Index = () => {
               </div>
             </div>
             
-            <Tabs defaultValue="resale" className="w-full">
-              <TabsList className="mb-8">
-                <TabsTrigger value="resale" className="px-8">Resale Listings</TabsTrigger>
-                <TabsTrigger value="standard" className="px-8">Standard Bookings</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="resale">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {featuredResaleListings.map((listing, index) => (
-                    <TravelListingCard 
-                      key={index}
-                      title={listing.title}
-                      location={listing.location}
-                      image={listing.image}
-                      price={listing.price}
-                      originalPrice={listing.originalPrice}
-                      departureDate={listing.departureDate}
-                      duration={listing.duration}
-                      passengers={listing.passengers}
-                      isResale={listing.isResale}
-                      savingsPercentage={listing.savingsPercentage}
-                    />
-                  ))}
-                </div>
-                
-                <div className="mt-12 text-center">
-                  <Button size="lg" className="bg-tt-blue hover:bg-tt-blue-dark">
-                    View All Resale Listings
-                    <ArrowRight size={18} className="ml-2" />
-                  </Button>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="standard">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {standardListings.map((listing, index) => (
-                    <TravelListingCard 
-                      key={index}
-                      title={listing.title}
-                      location={listing.location}
-                      image={listing.image}
-                      price={listing.price}
-                      departureDate={listing.departureDate}
-                      duration={listing.duration}
-                      passengers={listing.passengers}
-                    />
-                  ))}
-                </div>
-                
-                <div className="mt-12 text-center">
-                  <Button size="lg" className="bg-tt-blue hover:bg-tt-blue-dark">
-                    View All Standard Bookings
-                    <ArrowRight size={18} className="ml-2" />
-                  </Button>
-                </div>
-              </TabsContent>
-            </Tabs>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredListings.map((listing, index) => (
+                <TravelListingCard 
+                  key={index}
+                  title={listing.title}
+                  location={listing.location}
+                  image={listing.image}
+                  price={listing.price}
+                  originalPrice={listing.originalPrice}
+                  departureDate={listing.departureDate}
+                  duration={listing.duration}
+                  passengers={listing.passengers}
+                  source={listing.source}
+                  sourceLogo={listing.sourceLogo}
+                  savingsPercentage={listing.savingsPercentage}
+                />
+              ))}
+            </div>
+            
+            <div className="mt-12 text-center">
+              <Button size="lg" className="bg-tt-blue hover:bg-tt-blue-dark">
+                View All Travel Deals
+                <ArrowRight size={18} className="ml-2" />
+              </Button>
+            </div>
           </div>
         </section>
         
         {/* How It Works */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 bg-gray-50">
           <div className="container-custom">
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-3xl font-display font-semibold mb-3">How TransferTravel Works</h2>
@@ -261,7 +245,7 @@ const Index = () => {
         </section>
         
         {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-gray-50">
+        <section className="py-16 md:py-24">
           <div className="container-custom">
             <SellTravelCTA />
           </div>
