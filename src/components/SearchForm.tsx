@@ -2,14 +2,12 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import SearchTabs from './search-form/SearchTabs';
-import ResaleToggle from './search-form/ResaleToggle';
 import FlightsSearchTab from './search-form/FlightsSearchTab';
 import HotelsSearchTab from './search-form/HotelsSearchTab';
 import PackagesSearchTab from './search-form/PackagesSearchTab';
 
 const SearchForm = () => {
   const [searchType, setSearchType] = useState('flights');
-  const [includeResale, setIncludeResale] = useState(true);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   
@@ -18,7 +16,6 @@ const SearchForm = () => {
       <Tabs value={searchType} onValueChange={setSearchType}>
         <div className="flex items-center justify-between mb-6">
           <SearchTabs searchType={searchType} />
-          <ResaleToggle includeResale={includeResale} setIncludeResale={setIncludeResale} />
         </div>
         
         <TabsContent value="flights" className="mt-0">
