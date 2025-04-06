@@ -7,6 +7,7 @@ import PopularDestinationsSection from '@/components/home/PopularDestinationsSec
 import FeaturedListingsSection from '@/components/home/FeaturedListingsSection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import CTASection from '@/components/home/CTASection';
+import AITravelAgentSection from '@/components/home/AITravelAgentSection';
 
 const Index = () => {
   return (
@@ -17,6 +18,7 @@ const Index = () => {
         <HeroSection />
         <PopularDestinationsSection />
         <FeaturedListingsSection />
+        <AITravelAgentSection />
         <HowItWorksSection />
         <CTASection />
       </main>
