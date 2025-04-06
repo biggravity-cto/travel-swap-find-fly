@@ -25,10 +25,12 @@ const TravelAgent = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      {/* Fixed header at the top */}
       <Header />
       
-      <div className="flex-grow overflow-hidden flex flex-col pt-2"> 
-        <div className="container-custom">
+      {/* Main content area with proper spacing from header */}
+      <div className="flex-grow flex flex-col overflow-hidden pt-6"> 
+        <div className="container-custom mb-2">
           <Link to="/">
             <Button variant="ghost" className="text-tt-blue hover:text-tt-blue-dark">
               <ChevronLeft size={16} className="mr-1" /> Back to homepage
@@ -48,7 +50,7 @@ const TravelAgent = () => {
             
             {/* Main Chat Area */}
             <div className="flex-1 flex flex-col max-h-full overflow-hidden">
-              {/* Messages Container */}
+              {/* Messages Container with scrollable area and proper padding */}
               <div className="flex-1 overflow-y-auto p-4">
                 <MessageList 
                   messages={messages}
@@ -61,7 +63,7 @@ const TravelAgent = () => {
                 />
               </div>
               
-              {/* Input Area - Positioned at the bottom */}
+              {/* Input Area - Fixed at the bottom */}
               <div className="border-t bg-white p-4 w-full">
                 <ChatInput 
                   inputValue={inputValue}
