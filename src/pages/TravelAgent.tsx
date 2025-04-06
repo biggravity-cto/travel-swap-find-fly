@@ -14,25 +14,27 @@ const TravelAgent = () => {
     inputValue,
     loading,
     currentFlow,
+    isSellMode,
     setInputValue,
     handleSendMessage,
-    startPromptFlow
+    startPromptFlow,
+    toggleMode
   } = useTravelAgentChat();
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-grow bg-gray-50">
+      <main className="flex-grow bg-gray-50 flex flex-col">
         <SidebarProvider>
-          <div className="flex h-[calc(100vh-140px)]">
+          <div className="flex flex-grow">
             {/* Left Sidebar */}
             <Sidebar>
               <TravelAgentSidebar startPromptFlow={startPromptFlow} />
             </Sidebar>
             
             {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col h-full">
+            <div className="flex-1 flex flex-col max-h-[calc(100vh-140px)] overflow-hidden">
               {/* Messages Container */}
               <div className="flex-1 overflow-y-auto p-4">
                 <MessageList 
@@ -46,12 +48,14 @@ const TravelAgent = () => {
               </div>
               
               {/* Input Area - Positioned at the bottom */}
-              <div className="border-t bg-white p-4 sticky bottom-0">
+              <div className="border-t bg-white p-4 w-full">
                 <ChatInput 
                   inputValue={inputValue}
                   setInputValue={setInputValue}
                   handleSendMessage={handleSendMessage}
                   loading={loading}
+                  isSellMode={isSellMode}
+                  toggleMode={toggleMode}
                 />
               </div>
             </div>

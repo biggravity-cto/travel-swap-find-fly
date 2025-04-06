@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Message, PromptSuggestion, StepByStepFlow } from '../types';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,6 +22,25 @@ export const useTravelAgentChat = () => {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentFlow, setCurrentFlow] = useState<StepByStepFlow | null>(null);
+  const [isSellMode, setIsSellMode] = useState(false);
+
+  const toggleMode = () => {
+    setIsSellMode(prev => !prev);
+    // Update welcome message based on mode
+    if (messages.length === 1 && messages[0].isIntro) {
+      const newWelcomeMessage = !isSellMode 
+        ? "Hi! I'm your AI Travel Assistant. I'll help you sell your unused travel bookings. What would you like to sell today?"
+        : "Hi! I'm your AI Travel Assistant. How can I help you plan your next trip?";
+      
+      setMessages([{
+        id: uuidv4(),
+        content: newWelcomeMessage,
+        role: 'assistant',
+        timestamp: new Date(),
+        isIntro: true
+      }]);
+    }
+  };
 
   const startPromptFlow = (prompt: PromptSuggestion) => {
     const initialFlow: StepByStepFlow = {
@@ -78,8 +98,10 @@ export const useTravelAgentChat = () => {
     inputValue,
     loading,
     currentFlow,
+    isSellMode,
     setInputValue,
     handleSendMessage,
-    startPromptFlow  // Make sure to expose this function
+    startPromptFlow,
+    toggleMode
   };
 };
