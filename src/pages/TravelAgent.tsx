@@ -2,204 +2,535 @@
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { MessageSquare, Zap, ArrowRight, Airplane, Hotel, Package, Briefcase, Calendar, Compass, Map, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { MessageSquare, Zap, Gift, Search, Check, Calendar, Users, Briefcase, ArrowRight } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { 
+  SidebarProvider, 
+  Sidebar, 
+  SidebarContent,
+  SidebarHeader,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarSeparator,
+  SidebarFooter
+} from '@/components/ui/sidebar';
 
 interface Message {
   id: string;
   content: string;
   role: 'user' | 'assistant';
   timestamp: Date;
+  isIntro?: boolean;
+  flow?: StepByStepFlow;
+  currentStep?: number;
 }
 
-interface JourneyStepProps {
+interface PromptSuggestion {
+  id: string;
   title: string;
   description: string;
   icon: React.ReactNode;
-  ctaText: string;
-  onClick: () => void;
+  type: 'vacation' | 'business' | 'deal-hunter' | 'reseller' | 'affiliate' | 'provider';
+  category: 'traveler' | 'seller';
 }
 
-const JourneyStep: React.FC<JourneyStepProps> = ({ title, description, icon, ctaText, onClick }) => {
-  return (
-    <Card className="mb-4 hover:shadow-md transition-shadow cursor-pointer" onClick={onClick}>
-      <CardContent className="flex items-start p-6">
-        <div className="mr-4 text-tt-blue">
-          {icon}
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold mb-1">{title}</h3>
-          <p className="text-gray-600 text-sm mb-4">{description}</p>
-          <Button variant="ghost" className="text-tt-blue p-0 flex items-center hover:bg-transparent">
-            {ctaText} <ArrowRight size={16} className="ml-1" />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
+interface Step {
+  question: string;
+  options?: string[];
+  type: 'text' | 'options' | 'date' | 'location' | 'budget';
+  fieldName: string;
+}
+
+interface StepByStepFlow {
+  type: 'vacation' | 'business' | 'deal-hunter' | 'reseller' | 'affiliate' | 'provider';
+  title: string;
+  steps: Step[];
+  userInput: Record<string, string>;
+}
 
 const TravelAgent = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hi! I'm your AI Travel Assistant. How can I help you plan your next adventure or sell your travel deals?",
+      content: "👋 Hi! I'm your AI Travel Assistant. How can I help with your travel plans today?",
       role: 'assistant',
       timestamp: new Date(),
+      isIntro: true
     },
   ]);
   const [inputValue, setInputValue] = useState('');
-  const [activeUserType, setActiveUserType] = useState<'traveler' | 'seller' | null>(null);
-  const [activeTravelerType, setActiveTravelerType] = useState<'vacation' | 'business' | 'deal-hunter' | null>(null);
-  const [activeSellerType, setActiveSellerType] = useState<'reseller' | 'affiliate' | 'provider' | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [currentFlow, setCurrentFlow] = useState<StepByStepFlow | null>(null);
   
+  const travelerPrompts: PromptSuggestion[] = [
+    {
+      id: 'vacation',
+      title: 'Plan a Vacation',
+      description: 'Find destinations, accommodations, and activities',
+      icon: <Calendar className="h-4 w-4" />,
+      type: 'vacation',
+      category: 'traveler'
+    },
+    {
+      id: 'business',
+      title: 'Business Travel',
+      description: 'Efficient booking with business amenities',
+      icon: <Briefcase className="h-4 w-4" />,
+      type: 'business',
+      category: 'traveler'
+    },
+    {
+      id: 'deal-hunter',
+      title: 'Find Travel Deals',
+      description: 'Get alerts for price drops and bargains',
+      icon: <Compass className="h-4 w-4" />,
+      type: 'deal-hunter',
+      category: 'traveler'
+    }
+  ];
+  
+  const sellerPrompts: PromptSuggestion[] = [
+    {
+      id: 'reseller',
+      title: 'Resell Your Bookings',
+      description: 'Sell unused reservations or tickets',
+      icon: <Airplane className="h-4 w-4" />,
+      type: 'reseller',
+      category: 'seller'
+    },
+    {
+      id: 'affiliate',
+      title: 'Become an Affiliate',
+      description: 'Earn commissions promoting travel deals',
+      icon: <Users className="h-4 w-4" />,
+      type: 'affiliate',
+      category: 'seller'
+    },
+    {
+      id: 'provider',
+      title: 'List as a Provider',
+      description: 'Add your services to our marketplace',
+      icon: <Map className="h-4 w-4" />,
+      type: 'provider',
+      category: 'seller'
+    }
+  ];
+  
+  // These flows define the step-by-step conversation for each prompt type
+  const stepByStepFlows: Record<string, StepByStepFlow> = {
+    vacation: {
+      type: 'vacation',
+      title: 'Vacation Planning',
+      steps: [
+        { 
+          question: "Where would you like to go for your vacation?", 
+          type: 'location',
+          fieldName: 'destination'
+        },
+        { 
+          question: "When are you planning to travel?", 
+          type: 'date',
+          fieldName: 'travelDates'
+        },
+        { 
+          question: "What's your budget range for this trip?", 
+          type: 'budget',
+          fieldName: 'budget'
+        },
+        { 
+          question: "What type of activities are you interested in?", 
+          options: ["Beach & Relaxation", "Cultural Experiences", "Adventure & Outdoors", "Family-friendly", "Luxury & Spa"],
+          type: 'options',
+          fieldName: 'activities'
+        }
+      ],
+      userInput: {}
+    },
+    business: {
+      type: 'business',
+      title: 'Business Travel Planning',
+      steps: [
+        { 
+          question: "What's your business destination?", 
+          type: 'location',
+          fieldName: 'destination'
+        },
+        { 
+          question: "What are your travel dates?", 
+          type: 'date',
+          fieldName: 'travelDates'
+        },
+        { 
+          question: "What business amenities do you require?", 
+          options: ["WiFi", "Meeting Rooms", "Business Center", "Airport Transfer", "Flexible Booking"],
+          type: 'options',
+          fieldName: 'amenities'
+        }
+      ],
+      userInput: {}
+    },
+    'deal-hunter': {
+      type: 'deal-hunter',
+      title: 'Travel Deal Alerts',
+      steps: [
+        { 
+          question: "Which destinations are you interested in finding deals for?", 
+          type: 'location',
+          fieldName: 'destinations'
+        },
+        { 
+          question: "What's your flexible travel period?", 
+          type: 'date',
+          fieldName: 'travelPeriod'
+        },
+        { 
+          question: "What's your target budget range?", 
+          type: 'budget',
+          fieldName: 'budget'
+        },
+        { 
+          question: "What type of deals are you most interested in?", 
+          options: ["Flights", "Hotels", "All-Inclusive Packages", "Last-Minute Deals"],
+          type: 'options',
+          fieldName: 'dealTypes'
+        }
+      ],
+      userInput: {}
+    },
+    reseller: {
+      type: 'reseller',
+      title: 'Resell Your Travel Bookings',
+      steps: [
+        { 
+          question: "What type of booking are you looking to resell?", 
+          options: ["Hotel Booking", "Flight Ticket", "Package Deal", "Other"],
+          type: 'options',
+          fieldName: 'bookingType'
+        },
+        { 
+          question: "What are the dates of your booking?", 
+          type: 'date',
+          fieldName: 'bookingDates'
+        },
+        { 
+          question: "What was the original price you paid?", 
+          type: 'budget',
+          fieldName: 'originalPrice'
+        },
+        { 
+          question: "What price are you hoping to sell it for?", 
+          type: 'budget',
+          fieldName: 'askingPrice'
+        }
+      ],
+      userInput: {}
+    },
+    affiliate: {
+      type: 'affiliate',
+      title: 'Affiliate Marketing',
+      steps: [
+        { 
+          question: "What platform do you use to promote travel deals?", 
+          options: ["Blog", "Social Media", "YouTube", "Email List", "Other"],
+          type: 'options',
+          fieldName: 'platform'
+        },
+        { 
+          question: "What travel niche are you focused on?", 
+          type: 'text',
+          fieldName: 'niche'
+        },
+        { 
+          question: "What's your approximate audience size?", 
+          type: 'text',
+          fieldName: 'audienceSize'
+        }
+      ],
+      userInput: {}
+    },
+    provider: {
+      type: 'provider',
+      title: 'List Your Travel Services',
+      steps: [
+        { 
+          question: "What type of service do you offer?", 
+          options: ["Hotel/Accommodation", "Tour/Activity", "Transportation", "Other"],
+          type: 'options',
+          fieldName: 'serviceType'
+        },
+        { 
+          question: "What's the name of your service?", 
+          type: 'text',
+          fieldName: 'serviceName'
+        },
+        { 
+          question: "Where is your service located?", 
+          type: 'location',
+          fieldName: 'location'
+        },
+        { 
+          question: "What's your pricing structure?", 
+          type: 'text',
+          fieldName: 'pricing'
+        }
+      ],
+      userInput: {}
+    }
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() && !currentFlow) return;
     
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: inputValue,
+      content: inputValue || "I'd like assistance with this.",
       role: 'user',
       timestamp: new Date(),
     };
     
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setLoading(true);
     
-    // Simulate AI response 
+    // Simulate AI thinking time
     setTimeout(() => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: getResponseBasedOnContext(inputValue, activeUserType, activeTravelerType, activeSellerType),
-        role: 'assistant',
-        timestamp: new Date(),
-      };
+      let aiResponse: Message;
       
-      setMessages((prev) => [...prev, aiResponse]);
+      if (currentFlow) {
+        const lastMessage = messages[messages.length - 1];
+        const currentStep = lastMessage.flow?.currentStep || 0;
+        
+        // Store user input in the flow
+        if (lastMessage.role === 'assistant' && lastMessage.flow) {
+          const updatedFlow = { ...currentFlow };
+          const field = updatedFlow.steps[currentStep - 1]?.fieldName;
+          
+          if (field) {
+            updatedFlow.userInput[field] = inputValue;
+          }
+          
+          setCurrentFlow(updatedFlow);
+        }
+        
+        // Move to next step or finish flow
+        if (currentStep < currentFlow.steps.length) {
+          const nextStep = currentStep + 1;
+          aiResponse = {
+            id: Date.now().toString(),
+            content: currentFlow.steps[nextStep - 1].question,
+            role: 'assistant',
+            timestamp: new Date(),
+            flow: currentFlow,
+            currentStep: nextStep
+          };
+        } else {
+          // Flow complete - generate summary
+          const summaryContent = generateFlowSummary(currentFlow);
+          aiResponse = {
+            id: Date.now().toString(),
+            content: summaryContent,
+            role: 'assistant',
+            timestamp: new Date()
+          };
+          setCurrentFlow(null);
+        }
+      } else {
+        // Regular response
+        aiResponse = {
+          id: Date.now().toString(),
+          content: "I can help with that! Would you like some specific travel recommendations, or do you want to try one of our guided experiences from the sidebar?",
+          role: 'assistant',
+          timestamp: new Date(),
+        };
+      }
+      
+      setMessages(prev => [...prev, aiResponse]);
+      setLoading(false);
     }, 1000);
   };
 
-  const getResponseBasedOnContext = (
-    message: string, 
-    userType: 'traveler' | 'seller' | null,
-    travelerType: 'vacation' | 'business' | 'deal-hunter' | null,
-    sellerType: 'reseller' | 'affiliate' | 'provider' | null
-  ): string => {
-    // This would be replaced with actual AI logic in production
-    if (userType === 'traveler') {
-      if (travelerType === 'vacation') {
-        return "Based on your preferences, I've found several vacation packages that might interest you. Would you like me to set up deal alerts for destinations like Barcelona or Bali?";
-      } else if (travelerType === 'business') {
-        return "I can help you find business-friendly accommodations with meeting facilities. Would you like me to focus on flexible booking options that allow for last-minute changes?";
-      } else if (travelerType === 'deal-hunter') {
-        return "I've set up your deal alerts! I'll notify you when prices drop for your selected destinations. In the meantime, there's a flash sale on flights to Asia this weekend.";
-      }
-    } else if (userType === 'seller') {
-      if (sellerType === 'reseller') {
-        return "I can help you list your unused travel bookings. Would you like tips on how to optimize your listing for maximum visibility and quicker sales?";
-      } else if (sellerType === 'affiliate') {
-        return "As an affiliate marketer, you can earn up to 8% commission on referrals. Let me show you how to create custom tracking links for your marketing campaigns.";
-      } else if (sellerType === 'provider') {
-        return "I can help you list your hotel or travel experience on our marketplace. Would you like tips on pricing strategies that increase bookings?";
-      }
+  const startPromptFlow = (prompt: PromptSuggestion) => {
+    const flow = stepByStepFlows[prompt.type];
+    if (!flow) return;
+    
+    // Reset flow state with fresh userInput
+    const freshFlow = {
+      ...flow,
+      userInput: {}
+    };
+    
+    setCurrentFlow(freshFlow);
+    
+    // Add intro message and first question
+    const introMessage: Message = {
+      id: Date.now().toString(),
+      content: `Let's ${prompt.title.toLowerCase()}! I'll ask you a few questions to better understand your needs.`,
+      role: 'assistant',
+      timestamp: new Date(),
+      flow: freshFlow,
+      currentStep: 0
+    };
+    
+    const firstQuestion: Message = {
+      id: (Date.now() + 1).toString(),
+      content: freshFlow.steps[0].question,
+      role: 'assistant',
+      timestamp: new Date(),
+      flow: freshFlow,
+      currentStep: 1
+    };
+    
+    setMessages(prev => [...prev, introMessage, firstQuestion]);
+  };
+
+  const generateFlowSummary = (flow: StepByStepFlow): string => {
+    // Generate different summary based on flow type
+    switch (flow.type) {
+      case 'vacation':
+        return `Thanks for providing all that information! Based on your preferences, I've found some great vacation options for ${flow.userInput.destination} within your budget of ${flow.userInput.budget}. You mentioned interest in ${flow.userInput.activities} activities, so I recommend visiting during ${flow.userInput.travelDates}. Would you like me to send you some specific hotel and activity recommendations?`;
+      
+      case 'business':
+        return `Perfect! I've noted your business trip to ${flow.userInput.destination} on ${flow.userInput.travelDates}. I'll find accommodations with ${flow.userInput.amenities} as requested. Would you like me to prioritize hotels close to any specific business district or venue?`;
+      
+      case 'deal-hunter':
+        return `I've set up deal alerts for ${flow.userInput.destinations} during ${flow.userInput.travelPeriod} with a budget of ${flow.userInput.budget}. I'll notify you when I find ${flow.userInput.dealTypes} deals that match your criteria. In the meantime, would you like to see some current special offers?`;
+      
+      case 'reseller':
+        return `I've prepared a listing for your ${flow.userInput.bookingType} for ${flow.userInput.bookingDates}. Original price: ${flow.userInput.originalPrice}, asking price: ${flow.userInput.askingPrice}. Would you like me to suggest the best marketplaces to list this booking, or help optimize your listing description?`;
+      
+      case 'affiliate':
+        return `Great! I've registered your affiliate account for your ${flow.userInput.platform} with a focus on ${flow.userInput.niche} and an audience of ${flow.userInput.audienceSize}. I've prepared custom tracking links and promotional materials for you. Would you like to see our current top-converting offers?`;
+      
+      case 'provider':
+        return `I've created a draft listing for your ${flow.userInput.serviceType} called "${flow.userInput.serviceName}" located in ${flow.userInput.location} with pricing at ${flow.userInput.pricing}. Would you like help enhancing your listing with SEO optimizations and professional photography services?`;
+      
+      default:
+        return "Thanks for providing all that information! I'll use these details to help you with your travel needs. Is there anything specific you'd like to know?";
     }
-    
-    return "I found several options that might interest you. Based on your message, I recommend exploring our special deals section. Would you like more specific guidance? You can select your journey type from the right panel.";
   };
 
-  const resetJourney = () => {
-    setActiveUserType(null);
-    setActiveTravelerType(null);
-    setActiveSellerType(null);
-    setMessages([{
-      id: Date.now().toString(),
-      content: "Let's start fresh! How can I assist you today?",
-      role: 'assistant',
-      timestamp: new Date(),
-    }]);
-  };
-
-  const startTravelerJourney = (type: 'vacation' | 'business' | 'deal-hunter') => {
-    setActiveUserType('traveler');
-    setActiveTravelerType(type);
-    
-    const messages = {
-      'vacation': "I'll help you plan the perfect vacation! Tell me about your dream destination, or I can suggest popular options based on your preferences.",
-      'business': "Business travel made easy! I can find you hotels with work amenities, convenient flight times, and even suggest local transportation options.",
-      'deal-hunter': "Let's find you amazing travel deals! I can set up price alerts, notify you of flash sales, and help you discover hidden gems at budget prices."
-    };
-    
-    setMessages([{
-      id: Date.now().toString(),
-      content: messages[type],
-      role: 'assistant',
-      timestamp: new Date(),
-    }]);
-  };
-
-  const startSellerJourney = (type: 'reseller' | 'affiliate' | 'provider') => {
-    setActiveUserType('seller');
-    setActiveSellerType(type);
-    
-    const messages = {
-      'reseller': "I'll help you resell your unused travel bookings! Let me guide you through creating attractive listings that sell quickly and at the best price.",
-      'affiliate': "Welcome to our affiliate program! I can show you how to earn commissions by promoting travel deals to your audience with custom tracking links.",
-      'provider': "Ready to list your travel services? I'll help you showcase your hotel, tour, or experience to thousands of potential customers."
-    };
-    
-    setMessages([{
-      id: Date.now().toString(),
-      content: messages[type],
-      role: 'assistant',
-      timestamp: new Date(),
-    }]);
-  };
+  // Reference to message container for auto-scrolling
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
   
+  React.useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-grow bg-gray-50 py-8">
-        <div className="container-custom">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-display font-semibold mb-2">Your Personal AI Travel Agent</h1>
-            <p className="text-tt-gray-dark max-w-2xl">Let our intelligent assistant help you plan trips, find deals, or maximize your earnings as a travel seller</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Chat section - Left column */}
-            <div>
-              <div className="bg-white rounded-lg shadow-sm mb-4 p-6">
-                <h2 className="text-xl font-semibold mb-4 flex items-center text-tt-blue">
-                  <MessageSquare className="mr-2" size={20} />
-                  Chat with your AI Travel Agent
-                </h2>
+      <main className="flex-grow bg-gray-50">
+        <SidebarProvider>
+          <div className="flex min-h-[calc(100vh-140px)]">
+            {/* Left Sidebar */}
+            <Sidebar>
+              <SidebarHeader>
+                <div className="flex items-center px-2 py-1">
+                  <MessageSquare className="mr-2 h-5 w-5 text-tt-blue" />
+                  <h2 className="text-lg font-semibold text-tt-blue">AI Travel Agent</h2>
+                </div>
+              </SidebarHeader>
+              
+              <SidebarContent>
+                <SidebarGroup>
+                  <SidebarGroupLabel>Traveler Experiences</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {travelerPrompts.map((prompt) => (
+                        <SidebarMenuItem key={prompt.id}>
+                          <SidebarMenuButton 
+                            onClick={() => startPromptFlow(prompt)}
+                            tooltip={prompt.description}
+                          >
+                            {prompt.icon}
+                            <span>{prompt.title}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
                 
-                <div className="h-96 overflow-y-auto mb-4 border rounded-md p-4">
+                <SidebarSeparator />
+                
+                <SidebarGroup>
+                  <SidebarGroupLabel>Seller Options</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {sellerPrompts.map((prompt) => (
+                        <SidebarMenuItem key={prompt.id}>
+                          <SidebarMenuButton 
+                            onClick={() => startPromptFlow(prompt)}
+                            tooltip={prompt.description}
+                          >
+                            {prompt.icon}
+                            <span>{prompt.title}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </SidebarContent>
+              
+              <SidebarFooter>
+                <div className="px-4 py-2 text-xs text-muted-foreground">
+                  <p>© 2025 TransferTravel</p>
+                </div>
+              </SidebarFooter>
+            </Sidebar>
+            
+            {/* Main Chat Area */}
+            <div className="flex-1 flex flex-col">
+              {/* Messages Container */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <div className="max-w-3xl mx-auto mb-4">
                   {messages.map((message) => (
                     <div
                       key={message.id}
-                      className={`mb-4 ${
+                      className={`mb-6 ${
                         message.role === 'user' ? 'text-right' : 'text-left'
                       }`}
                     >
                       <div
-                        className={`inline-block p-3 rounded-lg max-w-[80%] ${
+                        className={`inline-block p-4 rounded-lg max-w-[85%] ${
                           message.role === 'user'
                             ? 'bg-tt-blue text-white'
-                            : 'bg-gray-100 text-gray-800'
+                            : 'bg-white border border-gray-200 shadow-sm text-gray-800'
                         }`}
                       >
-                        {message.content}
+                        <div className="prose prose-sm">{message.content}</div>
+                        
+                        {/* Render options if this is a step with options */}
+                        {message.flow?.steps[message.currentStep! - 1]?.options && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {message.flow.steps[message.currentStep! - 1].options!.map((option) => (
+                              <Button 
+                                key={option} 
+                                variant="outline" 
+                                size="sm"
+                                className={message.role === 'user' ? 'bg-white text-tt-blue hover:bg-white/90' : ''}
+                                onClick={() => {
+                                  setInputValue(option);
+                                  handleSendMessage(new Event('submit') as any);
+                                }}
+                              >
+                                {option}
+                              </Button>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-gray-500 mt-1 mx-2">
                         {message.timestamp.toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit',
@@ -207,331 +538,82 @@ const TravelAgent = () => {
                       </div>
                     </div>
                   ))}
+                  
+                  {/* Loading indicator */}
+                  {loading && (
+                    <div className="flex items-center space-x-2 text-left mb-6">
+                      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" 
+                        style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" 
+                        style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" 
+                        style={{ animationDelay: '300ms' }}></div>
+                    </div>
+                  )}
+                  
+                  <div ref={messagesEndRef} />
                 </div>
-                
-                <form onSubmit={handleSendMessage} className="flex gap-2">
-                  <Input
-                    placeholder="Ask me anything about travel..."
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    className="flex-grow"
-                  />
-                  <Button type="submit">
-                    <Zap size={16} className="mr-1" /> Ask
-                  </Button>
-                </form>
               </div>
               
-              {(activeUserType || activeTravelerType || activeSellerType) && (
-                <div className="text-center">
-                  <Button 
-                    variant="outline" 
-                    onClick={resetJourney}
-                    className="text-tt-gray-dark"
-                  >
-                    Start a new journey
-                  </Button>
-                </div>
-              )}
-            </div>
-            
-            {/* User journey flows - Right column */}
-            <div>
-              {!activeUserType && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">How can I help you today?</h2>
-                  <p className="text-gray-600 mb-6">Select your journey to get personalized assistance</p>
+              {/* Input Area */}
+              <div className="border-t bg-white p-4">
+                <div className="max-w-3xl mx-auto">
+                  <form onSubmit={handleSendMessage} className="flex gap-2">
+                    <Input
+                      placeholder="Type your message here..."
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      className="flex-grow"
+                      disabled={loading}
+                    />
+                    <Button type="submit" disabled={loading}>
+                      <Zap size={16} className="mr-1" /> Send
+                    </Button>
+                  </form>
                   
-                  <Tabs defaultValue="traveler">
-                    <TabsList className="grid grid-cols-2 mb-6">
-                      <TabsTrigger value="traveler">I want to travel</TabsTrigger>
-                      <TabsTrigger value="seller">I want to sell</TabsTrigger>
-                    </TabsList>
-                    
-                    <TabsContent value="traveler" className="space-y-4">
-                      <JourneyStep
-                        title="Plan a Vacation"
-                        description="Find destinations, accommodations, and activities for your next getaway"
-                        icon={<Calendar size={24} />}
-                        ctaText="Start planning"
-                        onClick={() => startTravelerJourney('vacation')}
-                      />
-                      
-                      <JourneyStep
-                        title="Business Travel"
-                        description="Efficient booking for work trips with business-friendly amenities"
-                        icon={<Briefcase size={24} />}
-                        ctaText="Book business travel"
-                        onClick={() => startTravelerJourney('business')}
-                      />
-                      
-                      <JourneyStep
-                        title="Deal Hunter"
-                        description="Get alerts for price drops and find the best travel bargains"
-                        icon={<Search size={24} />}
-                        ctaText="Find deals"
-                        onClick={() => startTravelerJourney('deal-hunter')}
-                      />
-                    </TabsContent>
-                    
-                    <TabsContent value="seller" className="space-y-4">
-                      <JourneyStep
-                        title="Resell Your Bookings"
-                        description="Sell your unused hotel reservations, flights, or packages"
-                        icon={<Users size={24} />}
-                        ctaText="Start selling"
-                        onClick={() => startSellerJourney('reseller')}
-                      />
-                      
-                      <JourneyStep
-                        title="Become an Affiliate"
-                        description="Earn commissions by promoting travel deals to your audience"
-                        icon={<Gift size={24} />}
-                        ctaText="Join affiliate program"
-                        onClick={() => startSellerJourney('affiliate')}
-                      />
-                      
-                      <JourneyStep
-                        title="List as a Provider"
-                        description="Add your hotel, tour, or travel experience to our marketplace"
-                        icon={<Check size={24} />}
-                        ctaText="List your service"
-                        onClick={() => startSellerJourney('provider')}
-                      />
-                    </TabsContent>
-                  </Tabs>
-                </div>
-              )}
-              
-              {activeUserType === 'traveler' && activeTravelerType && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">
-                    {activeTravelerType === 'vacation' ? 'Vacation Planning' : 
-                     activeTravelerType === 'business' ? 'Business Travel' : 
-                     'Deal Alerts'}
-                  </h2>
-                  
-                  {activeTravelerType === 'vacation' && (
-                    <div className="space-y-4">
-                      <p className="text-gray-600">Tell me about your dream vacation:</p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Where do you want to go?</label>
-                          <Input placeholder="e.g., Beach, Mountains, Europe..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">When are you planning to travel?</label>
-                          <Input placeholder="e.g., Next month, Summer 2025..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">What's your budget range?</label>
-                          <Input placeholder="e.g., $1000-2000, Budget-friendly..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Any specific preferences?</label>
-                          <Textarea placeholder="e.g., Family-friendly, All-inclusive, Cultural experiences..." />
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">Find Vacation Options</Button>
-                    </div>
-                  )}
-                  
-                  {activeTravelerType === 'business' && (
-                    <div className="space-y-4">
-                      <p className="text-gray-600">Let me help with your business travel:</p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Destination city</label>
-                          <Input placeholder="e.g., New York, London, Tokyo..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Travel dates</label>
-                          <div className="grid grid-cols-2 gap-3">
-                            <Input placeholder="Check-in" />
-                            <Input placeholder="Check-out" />
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Business requirements</label>
-                          <div className="flex flex-wrap gap-2">
-                            <Button variant="outline" size="sm">WiFi</Button>
-                            <Button variant="outline" size="sm">Meeting Room</Button>
-                            <Button variant="outline" size="sm">Airport Transfer</Button>
-                            <Button variant="outline" size="sm">Flexible Booking</Button>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">Find Business Hotels</Button>
-                    </div>
-                  )}
-                  
-                  {activeTravelerType === 'deal-hunter' && (
-                    <div className="space-y-4">
-                      <p className="text-gray-600">I'll alert you when travel prices drop!</p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Destinations you're interested in</label>
-                          <Input placeholder="e.g., Paris, Thailand, Caribbean..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Flexible travel period</label>
-                          <div className="grid grid-cols-2 gap-3">
-                            <Input placeholder="From" />
-                            <Input placeholder="To" />
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Price range</label>
-                          <Input placeholder="e.g., Under $500, Best value..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Deal types</label>
-                          <div className="flex flex-wrap gap-2">
-                            <Button variant="outline" size="sm">Flights</Button>
-                            <Button variant="outline" size="sm">Hotels</Button>
-                            <Button variant="outline" size="sm">Packages</Button>
-                            <Button variant="outline" size="sm">Last Minute</Button>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">Set Up Deal Alerts</Button>
+                  {/* Quick suggestions if no active flow */}
+                  {!currentFlow && messages.length < 3 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-xs"
+                        onClick={() => {
+                          setInputValue("What destinations are popular right now?");
+                          handleSendMessage(new Event('submit') as any);
+                        }}
+                      >
+                        Popular destinations
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => {
+                          setInputValue("How can I sell my unused hotel booking?");
+                          handleSendMessage(new Event('submit') as any);
+                        }}
+                      >
+                        Sell unused booking
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => {
+                          setInputValue("Find me a budget-friendly beach vacation");
+                          handleSendMessage(new Event('submit') as any);
+                        }}
+                      >
+                        Budget beach vacation
+                      </Button>
                     </div>
                   )}
                 </div>
-              )}
-              
-              {activeUserType === 'seller' && activeSellerType && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-xl font-semibold mb-4">
-                    {activeSellerType === 'reseller' ? 'Resell Your Travel' : 
-                     activeSellerType === 'affiliate' ? 'Affiliate Marketing' : 
-                     'List Your Services'}
-                  </h2>
-                  
-                  {activeSellerType === 'reseller' && (
-                    <div className="space-y-4">
-                      <p className="text-gray-600">Sell your unused travel bookings quickly and safely:</p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">What are you selling?</label>
-                          <div className="flex flex-wrap gap-2">
-                            <Button variant="outline" size="sm">Hotel Booking</Button>
-                            <Button variant="outline" size="sm">Flight Ticket</Button>
-                            <Button variant="outline" size="sm">Package Deal</Button>
-                            <Button variant="outline" size="sm">Other</Button>
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Booking details</label>
-                          <Textarea placeholder="Describe your booking (dates, location, etc.)" />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Original price paid</label>
-                          <Input placeholder="e.g., $500" />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Asking price</label>
-                          <Input placeholder="e.g., $400" />
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">Create Listing</Button>
-                    </div>
-                  )}
-                  
-                  {activeSellerType === 'affiliate' && (
-                    <div className="space-y-4">
-                      <p className="text-gray-600">Earn commissions by promoting travel deals:</p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Your promotional platform</label>
-                          <div className="flex flex-wrap gap-2">
-                            <Button variant="outline" size="sm">Blog</Button>
-                            <Button variant="outline" size="sm">Social Media</Button>
-                            <Button variant="outline" size="sm">YouTube</Button>
-                            <Button variant="outline" size="sm">Email</Button>
-                            <Button variant="outline" size="sm">Other</Button>
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Audience interests</label>
-                          <Input placeholder="e.g., Luxury travel, Budget backpacking..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Estimated audience size</label>
-                          <Input placeholder="e.g., 5,000 followers, 10,000 monthly readers..." />
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">Create Affiliate Account</Button>
-                    </div>
-                  )}
-                  
-                  {activeSellerType === 'provider' && (
-                    <div className="space-y-4">
-                      <p className="text-gray-600">List your travel service or accommodation:</p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Service type</label>
-                          <div className="flex flex-wrap gap-2">
-                            <Button variant="outline" size="sm">Hotel/Accommodation</Button>
-                            <Button variant="outline" size="sm">Tour/Activity</Button>
-                            <Button variant="outline" size="sm">Transport</Button>
-                            <Button variant="outline" size="sm">Other</Button>
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Service name</label>
-                          <Input placeholder="e.g., Beachside Villa, Mountain Hiking Tour..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                          <Input placeholder="e.g., Bali, Indonesia" />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                          <Textarea placeholder="Describe what makes your service special..." />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Price range</label>
-                          <Input placeholder="e.g., $100-200 per night, $50 per person..." />
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">Create Provider Listing</Button>
-                    </div>
-                  )}
-                </div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
+        </SidebarProvider>
       </main>
       
       <Footer />
