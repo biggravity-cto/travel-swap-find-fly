@@ -11,6 +11,7 @@ interface MessageListProps {
   setInputValue: (value: string) => void;
   showPromptSuggestions?: boolean;
   startPromptFlow: (prompt: PromptSuggestion) => void;
+  isSellMode?: boolean;
 }
 
 const MessageList: React.FC<MessageListProps> = ({ 
@@ -19,7 +20,8 @@ const MessageList: React.FC<MessageListProps> = ({
   handleSendMessage, 
   setInputValue,
   showPromptSuggestions = false,
-  startPromptFlow
+  startPromptFlow,
+  isSellMode = false
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
@@ -27,6 +29,9 @@ const MessageList: React.FC<MessageListProps> = ({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Choose prompts based on mode
+  const promptsToShow = isSellMode ? sellerPrompts : travelerPrompts;
 
   return (
     <div className="max-w-3xl mx-auto mb-4">
@@ -90,27 +95,11 @@ const MessageList: React.FC<MessageListProps> = ({
       {/* Prompt suggestions in the chat area */}
       {showPromptSuggestions && messages.length > 0 && (
         <div className="mt-4 mb-6 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-          <h3 className="font-medium text-gray-700 mb-3">Suggested prompts</h3>
+          <h3 className="font-medium text-gray-700 mb-3">
+            {isSellMode ? "Selling Options" : "Suggested Travel Options"}
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {travelerPrompts.slice(0, 2).map((prompt) => (
-              <Button 
-                key={prompt.id}
-                variant="outline"
-                className="justify-start text-left h-auto py-3"
-                onClick={() => startPromptFlow(prompt)}
-              >
-                <div className="flex items-center">
-                  <div className="mr-3 bg-gray-100 p-2 rounded-lg">
-                    {prompt.icon}
-                  </div>
-                  <div>
-                    <div className="font-medium">{prompt.title}</div>
-                    <div className="text-xs text-gray-500">{prompt.description}</div>
-                  </div>
-                </div>
-              </Button>
-            ))}
-            {sellerPrompts.slice(0, 1).map((prompt) => (
+            {promptsToShow.slice(0, 3).map((prompt) => (
               <Button 
                 key={prompt.id}
                 variant="outline"

@@ -13,7 +13,7 @@ export const useTravelAgentChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: uuidv4(),
-      content: "Hi! I'm your AI Travel Assistant. How can I help you today?",
+      content: "Hi! I'm your AI Travel Agent. How can I help you plan your next trip?",
       role: 'assistant',
       timestamp: new Date(),
       isIntro: true
@@ -29,8 +29,8 @@ export const useTravelAgentChat = () => {
     // Update welcome message based on mode
     if (messages.length === 1 && messages[0].isIntro) {
       const newWelcomeMessage = !isSellMode 
-        ? "Hi! I'm your AI Travel Assistant. I'll help you sell your unused travel bookings. What would you like to sell today?"
-        : "Hi! I'm your AI Travel Assistant. How can I help you plan your next trip?";
+        ? "Hi! I'm your AI Resell Agent. I'll help you sell your unused travel bookings. What would you like to sell today?"
+        : "Hi! I'm your AI Travel Agent. How can I help you plan your next trip?";
       
       setMessages([{
         id: uuidv4(),

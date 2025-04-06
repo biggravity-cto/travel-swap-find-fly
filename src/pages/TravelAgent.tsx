@@ -44,6 +44,7 @@ const TravelAgent = () => {
                   setInputValue={setInputValue}
                   showPromptSuggestions={!currentFlow && messages.length < 3}
                   startPromptFlow={startPromptFlow}
+                  isSellMode={isSellMode}
                 />
               </div>
               

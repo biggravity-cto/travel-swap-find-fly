@@ -28,7 +28,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
       <div className="flex items-center justify-end mb-3">
         <div className="flex items-center space-x-2">
           <Label htmlFor="mode-switch" className="text-sm text-muted-foreground">
-            Plan & Book
+            I'm a Traveller
           </Label>
           <Switch 
             id="mode-switch"
@@ -36,7 +36,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             onCheckedChange={toggleMode}
           />
           <Label htmlFor="mode-switch" className={`text-sm ${isSellMode ? 'text-tt-blue font-medium' : 'text-muted-foreground'}`}>
-            Sell My Travel
+            I'm a Seller
           </Label>
         </div>
       </div>
