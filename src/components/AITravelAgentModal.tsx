@@ -5,7 +5,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import AITravelAgent from '@/components/AITravelAgent';
 import { Button } from '@/components/ui/button';
-import { useMediaQuery } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AITravelAgentModalProps {
   isOpen: boolean;
@@ -14,7 +14,7 @@ interface AITravelAgentModalProps {
 }
 
 const AITravelAgentModal = ({ isOpen, onClose, onMinimize }: AITravelAgentModalProps) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
@@ -39,7 +39,7 @@ const AITravelAgentModal = ({ isOpen, onClose, onMinimize }: AITravelAgentModalP
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] overflow-y-auto" closeButton={false}>
+      <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">AI Travel Assistant</h2>
           <div className="flex space-x-2">
