@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { MessageSquare, Zap, ArrowRight, Airplane, Hotel, Package, Briefcase, Calendar, Compass, Map, Users } from 'lucide-react';
+import { MessageSquare, Zap, ArrowRight, Plane, Hotel, Package, Briefcase, Calendar, Compass, Map, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -51,6 +50,7 @@ interface StepByStepFlow {
   title: string;
   steps: Step[];
   userInput: Record<string, string>;
+  currentStep?: number; // Add the missing property
 }
 
 const TravelAgent = () => {
@@ -99,7 +99,7 @@ const TravelAgent = () => {
       id: 'reseller',
       title: 'Resell Your Bookings',
       description: 'Sell unused reservations or tickets',
-      icon: <Airplane className="h-4 w-4" />,
+      icon: <Plane className="h-4 w-4" />, // Changed from Airplane to Plane
       type: 'reseller',
       category: 'seller'
     },
