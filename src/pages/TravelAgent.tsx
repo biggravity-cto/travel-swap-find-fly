@@ -21,12 +21,10 @@ const TravelAgent = () => {
     startPromptFlow,
     toggleMode
   } = useTravelAgentChat();
-  
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      {/* Simple header with back button */}
+      {/* Simple header with back button - not using the fixed header from Header.tsx */}
       <header className="h-14 px-4 flex items-center border-b fixed top-0 left-0 right-0 z-50 bg-background">
         <Link to="/" className="flex items-center text-tt-blue hover:text-tt-blue-dark transition-colors">
           <ArrowLeft className="mr-2 h-5 w-5" />

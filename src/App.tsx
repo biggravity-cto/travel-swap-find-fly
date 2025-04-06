@@ -14,8 +14,19 @@ import Hotels from "./pages/Hotels";
 import Packages from "./pages/Packages";
 import ResaleMarketplace from "./pages/ResaleMarketplace";
 import NotFound from "./pages/NotFound";
+import Header from "./components/Header";
 
 const queryClient = new QueryClient();
+
+// Layout component to wrap regular pages (not TravelAgent which has its own layout)
+const PageLayout = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <Header />
+    <main className="page-container">
+      {children}
+    </main>
+  </>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -24,16 +35,16 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/listings" element={<Listings />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/sell" element={<SellTravel />} />
+          <Route path="/" element={<PageLayout><Index /></PageLayout>} />
+          <Route path="/listings" element={<PageLayout><Listings /></PageLayout>} />
+          <Route path="/rewards" element={<PageLayout><Rewards /></PageLayout>} />
+          <Route path="/sell" element={<PageLayout><SellTravel /></PageLayout>} />
+          <Route path="/flights" element={<PageLayout><Flights /></PageLayout>} />
+          <Route path="/hotels" element={<PageLayout><Hotels /></PageLayout>} />
+          <Route path="/packages" element={<PageLayout><Packages /></PageLayout>} />
+          <Route path="/marketplace" element={<PageLayout><ResaleMarketplace /></PageLayout>} />
           <Route path="/travel-agent" element={<TravelAgent />} />
-          <Route path="/flights" element={<Flights />} />
-          <Route path="/hotels" element={<Hotels />} />
-          <Route path="/packages" element={<Packages />} />
-          <Route path="/marketplace" element={<ResaleMarketplace />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

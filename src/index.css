@@ -84,6 +84,12 @@
 }
 
 @layer components {
+  /* Add top padding to account for fixed header height */
+  .page-container {
+    @apply pt-[72px];
+    min-height: calc(100vh);
+  }
+  
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
