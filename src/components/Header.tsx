@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Bell, User, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
@@ -15,10 +15,10 @@ const Header = () => {
           <div className="flex items-center">
             <Logo />
             <nav className="hidden md:flex ml-10 space-x-8">
-              <a href="#" className="nav-link font-medium">Flights</a>
-              <a href="#" className="nav-link font-medium">Hotels</a>
-              <a href="#" className="nav-link font-medium">Packages</a>
-              <a href="#" className="nav-link font-medium">Resale Marketplace</a>
+              <Link to="/flights" className="nav-link font-medium">Flights</Link>
+              <Link to="/hotels" className="nav-link font-medium">Hotels</Link>
+              <Link to="/packages" className="nav-link font-medium">Packages</Link>
+              <Link to="/marketplace" className="nav-link font-medium">Resale Marketplace</Link>
             </nav>
           </div>
           
@@ -35,9 +35,11 @@ const Header = () => {
             </Button>
             
             <div className="hidden md:block">
-              <Button variant="ghost" className="text-tt-blue border border-tt-blue hover:bg-tt-blue/5">
-                Sell Your Travel
-              </Button>
+              <Link to="/sell">
+                <Button variant="ghost" className="text-tt-blue border border-tt-blue hover:bg-tt-blue/5">
+                  Sell Your Travel
+                </Button>
+              </Link>
             </div>
             
             <Button variant="outline" size="icon" className="rounded-full">
@@ -52,12 +54,14 @@ const Header = () => {
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col mt-8 space-y-4">
-                  <a href="#" className="text-lg font-medium">Flights</a>
-                  <a href="#" className="text-lg font-medium">Hotels</a>
-                  <a href="#" className="text-lg font-medium">Packages</a>
-                  <a href="#" className="text-lg font-medium">Resale Marketplace</a>
+                  <Link to="/flights" className="text-lg font-medium">Flights</Link>
+                  <Link to="/hotels" className="text-lg font-medium">Hotels</Link>
+                  <Link to="/packages" className="text-lg font-medium">Packages</Link>
+                  <Link to="/marketplace" className="text-lg font-medium">Resale Marketplace</Link>
                   <Link to="/travel-agent" className="text-lg font-medium text-tt-blue">AI Travel Agent</Link>
-                  <Button className="w-full mt-4">Sell Your Travel</Button>
+                  <Link to="/sell" className="w-full mt-4">
+                    <Button className="w-full">Sell Your Travel</Button>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>

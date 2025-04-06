@@ -9,6 +9,10 @@ import Listings from "./pages/Listings";
 import Rewards from "./pages/Rewards";
 import SellTravel from "./pages/SellTravel";
 import TravelAgent from "./pages/TravelAgent";
+import Flights from "./pages/Flights";
+import Hotels from "./pages/Hotels";
+import Packages from "./pages/Packages";
+import ResaleMarketplace from "./pages/ResaleMarketplace";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/sell" element={<SellTravel />} />
           <Route path="/travel-agent" element={<TravelAgent />} />
+          <Route path="/flights" element={<Flights />} />
+          <Route path="/hotels" element={<Hotels />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/marketplace" element={<ResaleMarketplace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
