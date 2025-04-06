@@ -1,9 +1,43 @@
+
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
 
-const Tabs = TabsPrimitive.Root
+const TabsContext = React.createContext<{ value: string; onValueChange: (value: string) => void } | null>(null)
+
+const Tabs = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
+>(({ className, value, defaultValue, onValueChange, ...props }, ref) => {
+  const [tabValue, setTabValue] = React.useState(value || defaultValue || "")
+  
+  // Update internal state when prop changes
+  React.useEffect(() => {
+    if (value !== undefined) {
+      setTabValue(value)
+    }
+  }, [value])
+
+  const handleValueChange = React.useCallback((newValue: string) => {
+    setTabValue(newValue)
+    onValueChange?.(newValue)
+  }, [onValueChange])
+
+  return (
+    <TabsContext.Provider value={{ value: tabValue, onValueChange: handleValueChange }}>
+      <TabsPrimitive.Root
+        ref={ref}
+        className={cn("w-full", className)}
+        value={tabValue}
+        defaultValue={defaultValue}
+        onValueChange={handleValueChange}
+        {...props}
+      />
+    </TabsContext.Provider>
+  )
+})
+Tabs.displayName = TabsPrimitive.Root.displayName
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
