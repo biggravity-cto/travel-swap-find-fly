@@ -39,7 +39,7 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({
     <>
       <SidebarHeader isSellMode={isSellMode} />
       
-      <SidebarContent>
+      <SidebarContent className="overflow-y-auto">
         <ChatHistorySection 
           isSellMode={isSellMode} 
           historyItems={historyItems} 
