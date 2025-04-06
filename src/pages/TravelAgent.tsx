@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import { SidebarProvider, Sidebar } from '@/components/ui/sidebar';
 import TravelAgentSidebar from '@/components/travel-agent/TravelAgentSidebar';
@@ -23,14 +23,19 @@ const TravelAgent = () => {
     toggleMode
   } = useTravelAgentChat();
 
+  // Force scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="flex flex-col h-screen">
-      {/* Fixed header at the top */}
+    <>
+      {/* Fixed header */}
       <Header />
       
-      {/* Main content area with proper spacing from header */}
-      <div className="flex-grow flex flex-col overflow-hidden pt-6"> 
-        <div className="container-custom mb-2">
+      {/* Main content with explicit padding to account for header height */}
+      <div className="min-h-screen pt-[72px]">
+        <div className="container-custom mb-4">
           <Link to="/">
             <Button variant="ghost" className="text-tt-blue hover:text-tt-blue-dark">
               <ChevronLeft size={16} className="mr-1" /> Back to homepage
@@ -39,7 +44,7 @@ const TravelAgent = () => {
         </div>
         
         <SidebarProvider>
-          <div className="flex flex-1 overflow-hidden">
+          <div className="flex h-[calc(100vh-104px)] overflow-hidden">
             {/* Left Sidebar */}
             <Sidebar className="overflow-y-auto">
               <TravelAgentSidebar 
@@ -49,8 +54,8 @@ const TravelAgent = () => {
             </Sidebar>
             
             {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col max-h-full overflow-hidden">
-              {/* Messages Container with scrollable area and proper padding */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {/* Messages Container */}
               <div className="flex-1 overflow-y-auto p-4">
                 <MessageList 
                   messages={messages}
@@ -63,7 +68,7 @@ const TravelAgent = () => {
                 />
               </div>
               
-              {/* Input Area - Fixed at the bottom */}
+              {/* Input Area */}
               <div className="border-t bg-white p-4 w-full">
                 <ChatInput 
                   inputValue={inputValue}
@@ -88,7 +93,7 @@ const TravelAgent = () => {
           </div>
         </SidebarProvider>
       </div>
-    </div>
+    </>
   );
 };
 

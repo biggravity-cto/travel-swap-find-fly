@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 const Header = () => {
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
