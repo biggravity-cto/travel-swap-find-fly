@@ -6,8 +6,12 @@ import FlightsSearchTab from './search-form/FlightsSearchTab';
 import HotelsSearchTab from './search-form/HotelsSearchTab';
 import PackagesSearchTab from './search-form/PackagesSearchTab';
 
-const SearchForm = () => {
-  const [searchType, setSearchType] = useState('flights');
+interface SearchFormProps {
+  initialTab?: 'flights' | 'hotels' | 'packages';
+}
+
+const SearchForm = ({ initialTab = 'flights' }: SearchFormProps) => {
+  const [searchType, setSearchType] = useState(initialTab);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   
