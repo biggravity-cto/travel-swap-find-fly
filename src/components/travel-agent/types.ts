@@ -31,5 +31,5 @@ export interface StepByStepFlow {
   title: string;
   steps: Step[];
   userInput: Record<string, string>;
-  currentStep?: number;
+  currentStep: number;
 }

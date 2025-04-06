@@ -9,15 +9,13 @@ interface ChatInputProps {
   setInputValue: (value: string) => void;
   handleSendMessage: (e: React.FormEvent) => void;
   loading: boolean;
-  showQuickSuggestions: boolean;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
   inputValue,
   setInputValue,
   handleSendMessage,
-  loading,
-  showQuickSuggestions
+  loading
 }) => {
   return (
     <div className="max-w-3xl mx-auto">
@@ -33,45 +31,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
           <Zap size={16} className="mr-1" /> Send
         </Button>
       </form>
-      
-      {/* Quick suggestions */}
-      {showQuickSuggestions && (
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="text-xs"
-            onClick={() => {
-              setInputValue("What destinations are popular right now?");
-              handleSendMessage(new Event('submit') as any);
-            }}
-          >
-            Popular destinations
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="text-xs"
-            onClick={() => {
-              setInputValue("How can I sell my unused hotel booking?");
-              handleSendMessage(new Event('submit') as any);
-            }}
-          >
-            Sell unused booking
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="text-xs"
-            onClick={() => {
-              setInputValue("Find me a budget-friendly beach vacation");
-              handleSendMessage(new Event('submit') as any);
-            }}
-          >
-            Budget beach vacation
-          </Button>
-        </div>
-      )}
     </div>
   );
 };
