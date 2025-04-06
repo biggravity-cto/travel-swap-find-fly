@@ -1,14 +1,14 @@
 
-import React, { useEffect } from 'react';
-import Header from '@/components/Header';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { SidebarProvider, Sidebar } from '@/components/ui/sidebar';
+import Header from '@/components/Header';
 import TravelAgentSidebar from '@/components/travel-agent/TravelAgentSidebar';
 import MessageList from '@/components/travel-agent/MessageList';
 import ChatInput from '@/components/travel-agent/ChatInput';
 import { useTravelAgentChat } from '@/components/travel-agent/hooks/useTravelAgentChat';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const TravelAgent = () => {
   const {
@@ -23,18 +23,14 @@ const TravelAgent = () => {
     toggleMode
   } = useTravelAgentChat();
 
-  // Force scroll to top on component mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
-    <>
-      {/* Fixed header */}
+    <div className="flex flex-col min-h-screen">
+      {/* Header is rendered outside the main content area */}
       <Header />
       
-      {/* Main content with explicit padding to account for header height */}
-      <div className="min-h-screen pt-[72px]">
+      {/* Main content wrapper with proper spacing from header */}
+      <div className="flex flex-col flex-grow mt-[72px]">
+        {/* Back button */}
         <div className="container-custom mb-4">
           <Link to="/">
             <Button variant="ghost" className="text-tt-blue hover:text-tt-blue-dark">
@@ -43,10 +39,11 @@ const TravelAgent = () => {
           </Link>
         </div>
         
+        {/* Sidebar and chat area */}
         <SidebarProvider>
-          <div className="flex h-[calc(100vh-104px)] overflow-hidden">
+          <div className="flex flex-grow overflow-hidden h-[calc(100vh-132px)]">
             {/* Left Sidebar */}
-            <Sidebar className="overflow-y-auto">
+            <Sidebar className="h-full overflow-y-auto">
               <TravelAgentSidebar 
                 startPromptFlow={startPromptFlow} 
                 isSellMode={isSellMode}
@@ -54,7 +51,7 @@ const TravelAgent = () => {
             </Sidebar>
             
             {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col overflow-hidden h-full">
               {/* Messages Container */}
               <div className="flex-1 overflow-y-auto p-4">
                 <MessageList 
@@ -93,7 +90,7 @@ const TravelAgent = () => {
           </div>
         </SidebarProvider>
       </div>
-    </>
+    </div>
   );
 };
 
