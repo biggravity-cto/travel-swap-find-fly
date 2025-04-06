@@ -1,26 +1,13 @@
 
 import React, { useState } from 'react';
-import { Bell, User, Menu, MessageSquare } from 'lucide-react';
+import { Bell, User, Menu } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import AITravelAgentModal from '@/components/AITravelAgentModal';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
-  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
-  const [isAIMinimized, setIsAIMinimized] = useState(false);
-
-  const handleOpenAI = () => {
-    setIsAIModalOpen(true);
-    setIsAIMinimized(false);
-  };
-
-  const handleMinimizeAI = () => {
-    setIsAIModalOpen(false);
-    setIsAIMinimized(true);
-  };
-
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container-custom py-4">
@@ -36,16 +23,12 @@ const Header = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className={cn("text-tt-gray-dark relative", 
-                isAIMinimized && "after:content-[''] after:absolute after:top-1 after:right-1 after:w-2 after:h-2 after:bg-green-500 after:rounded-full"
-              )}
-              onClick={handleOpenAI}
+            <Link 
+              to="/travel-agent" 
+              className="text-tt-blue font-medium hover:text-tt-blue-dark transition-colors hidden md:block"
             >
-              <MessageSquare size={20} />
-            </Button>
+              AI Travel Agent
+            </Link>
             
             <Button variant="ghost" size="icon" className="text-tt-gray-dark">
               <Bell size={20} />
@@ -73,6 +56,7 @@ const Header = () => {
                   <a href="#" className="text-lg font-medium">Hotels</a>
                   <a href="#" className="text-lg font-medium">Packages</a>
                   <a href="#" className="text-lg font-medium">Resale Marketplace</a>
+                  <Link to="/travel-agent" className="text-lg font-medium text-tt-blue">AI Travel Agent</Link>
                   <Button className="w-full mt-4">Sell Your Travel</Button>
                 </div>
               </SheetContent>
@@ -80,12 +64,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      
-      <AITravelAgentModal 
-        isOpen={isAIModalOpen} 
-        onClose={() => setIsAIModalOpen(false)}
-        onMinimize={handleMinimizeAI}
-      />
     </header>
   );
 };
