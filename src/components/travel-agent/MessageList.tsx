@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Message } from './types';
+import { Message, PromptSuggestion } from './types';
 import { travelerPrompts, sellerPrompts } from './PromptSuggestions';
 
 interface MessageListProps {
@@ -10,6 +10,7 @@ interface MessageListProps {
   handleSendMessage: (e: React.FormEvent) => void;
   setInputValue: (value: string) => void;
   showPromptSuggestions?: boolean;
+  startPromptFlow: (prompt: PromptSuggestion) => void;
 }
 
 const MessageList: React.FC<MessageListProps> = ({ 
@@ -17,7 +18,8 @@ const MessageList: React.FC<MessageListProps> = ({
   loading, 
   handleSendMessage, 
   setInputValue,
-  showPromptSuggestions = false
+  showPromptSuggestions = false,
+  startPromptFlow
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   

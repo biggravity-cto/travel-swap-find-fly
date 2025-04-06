@@ -41,6 +41,7 @@ const TravelAgent = () => {
                   handleSendMessage={handleSendMessage}
                   setInputValue={setInputValue}
                   showPromptSuggestions={!currentFlow && messages.length < 3}
+                  startPromptFlow={startPromptFlow}
                 />
               </div>
               

@@ -29,7 +29,8 @@ export const stepByStepFlows: Record<string, StepByStepFlow> = {
         fieldName: 'activities'
       }
     ],
-    userInput: {}
+    userInput: {},
+    currentStep: 0
   },
   business: {
     type: 'business',
@@ -52,7 +53,8 @@ export const stepByStepFlows: Record<string, StepByStepFlow> = {
         fieldName: 'amenities'
       }
     ],
-    userInput: {}
+    userInput: {},
+    currentStep: 0
   },
   'deal-hunter': {
     type: 'deal-hunter',
@@ -80,7 +82,8 @@ export const stepByStepFlows: Record<string, StepByStepFlow> = {
         fieldName: 'dealTypes'
       }
     ],
-    userInput: {}
+    userInput: {},
+    currentStep: 0
   },
   reseller: {
     type: 'reseller',
@@ -108,7 +111,8 @@ export const stepByStepFlows: Record<string, StepByStepFlow> = {
         fieldName: 'askingPrice'
       }
     ],
-    userInput: {}
+    userInput: {},
+    currentStep: 0
   },
   affiliate: {
     type: 'affiliate',
@@ -131,7 +135,8 @@ export const stepByStepFlows: Record<string, StepByStepFlow> = {
         fieldName: 'audienceSize'
       }
     ],
-    userInput: {}
+    userInput: {},
+    currentStep: 0
   },
   provider: {
     type: 'provider',
@@ -159,7 +164,8 @@ export const stepByStepFlows: Record<string, StepByStepFlow> = {
         fieldName: 'pricing'
       }
     ],
-    userInput: {}
+    userInput: {},
+    currentStep: 0
   }
 };
 
