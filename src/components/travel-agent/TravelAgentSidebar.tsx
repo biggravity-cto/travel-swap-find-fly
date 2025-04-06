@@ -5,13 +5,16 @@ import { PromptSuggestion } from './types';
 import SidebarHeader from './sidebar/SidebarHeader';
 import ChatHistorySection from './sidebar/ChatHistorySection';
 import SavedItemsSection from './sidebar/SavedItemsSection';
+import SavedAlertsSection from './sidebar/SavedAlertsSection';
 import AccountSection from './sidebar/AccountSection';
 import SignupSection from './sidebar/SignupSection';
 import SidebarFooter from './sidebar/SidebarFooter';
 import { 
   travelerHistoryItems, 
   travelerSavedItems, 
-  sellerListingItems 
+  travelerAlerts,
+  sellerListingItems,
+  sellerAlerts
 } from './sidebar/mockData';
 
 interface TravelAgentSidebarProps {
@@ -28,6 +31,9 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({
   
   // Determine which saved items to show based on mode
   const savedItems = isSellMode ? sellerListingItems : travelerSavedItems;
+  
+  // Determine which alerts to show based on mode
+  const alerts = isSellMode ? sellerAlerts : travelerAlerts;
 
   return (
     <>
@@ -46,6 +52,10 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({
           savedItems={savedItems} 
         />
 
+        <SidebarSeparator />
+        
+        <SavedAlertsSection alerts={alerts} />
+        
         <SidebarSeparator />
         
         <AccountSection />

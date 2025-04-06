@@ -14,6 +14,18 @@ export const travelerSavedItems = [
   { id: 'saved-2', title: 'Europe Summer Tour', date: '1 week ago' },
 ];
 
+// Saved alerts
+export const travelerAlerts = [
+  { id: 'alert-1', title: 'Price drop: Tokyo flights', date: '1 day ago' },
+  { id: 'alert-2', title: 'New deal: Caribbean cruise', date: '3 days ago' },
+];
+
+// Seller alerts
+export const sellerAlerts = [
+  { id: 'seller-alert-1', title: 'New offer on your listing', date: '5 hours ago' },
+  { id: 'seller-alert-2', title: 'Listing expiring soon', date: '2 days ago' },
+];
+
 // Seller items
 export const sellerListingItems = [
   { id: 'listing-1', title: 'London-Paris Flight', date: '3 days ago' },
