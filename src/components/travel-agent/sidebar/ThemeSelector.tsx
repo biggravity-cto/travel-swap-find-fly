@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Circle, Apple, Google, Compass } from 'lucide-react';
+import { Circle, Apple, LayoutGrid, Compass } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
   Popover,
@@ -33,7 +33,7 @@ const ThemeSelector: React.FC = () => {
     { 
       id: 'google', 
       name: 'Google', 
-      icon: <Google className="h-4 w-4" />,
+      icon: <LayoutGrid className="h-4 w-4" />,
       color: 'bg-[#4285F4]'
     },
     { 
