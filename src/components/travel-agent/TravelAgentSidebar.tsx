@@ -8,6 +8,7 @@ import SavedItemsSection from './sidebar/SavedItemsSection';
 import SavedAlertsSection from './sidebar/SavedAlertsSection';
 import AccountSection from './sidebar/AccountSection';
 import SignupSection from './sidebar/SignupSection';
+import ThemeSelector from './sidebar/ThemeSelector';
 import SidebarFooter from './sidebar/SidebarFooter';
 import { 
   travelerHistoryItems, 
@@ -60,6 +61,10 @@ const TravelAgentSidebar: React.FC<TravelAgentSidebarProps> = ({
         
         <AccountSection />
 
+        <SidebarSeparator />
+        
+        <ThemeSelector />
+        
         <SidebarSeparator />
         
         <SignupSection />
