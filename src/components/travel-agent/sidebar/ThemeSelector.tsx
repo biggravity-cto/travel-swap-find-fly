@@ -52,6 +52,10 @@ const ThemeSelector: React.FC = () => {
   
   const activeTheme = themes.find(t => t.id === theme) || themes[0];
   
+  const handleThemeChange = (themeId: string) => {
+    setTheme(themeId as any);
+  };
+  
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Theme</SidebarGroupLabel>
@@ -69,7 +73,7 @@ const ThemeSelector: React.FC = () => {
               {themes.map((themeOption) => (
                 <button
                   key={themeOption.id}
-                  onClick={() => setTheme(themeOption.id as any)}
+                  onClick={() => handleThemeChange(themeOption.id)}
                   className={`flex items-center gap-2 w-full rounded-md p-2 text-sm hover:bg-muted ${
                     theme === themeOption.id ? 'bg-muted' : ''
                   }`}
