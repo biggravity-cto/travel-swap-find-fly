@@ -1,0 +1,29 @@
+
+/* Density adjustments */
+body.density-comfortable {
+  --content-padding: 1.5rem;
+  --card-padding: 1.25rem;
+  --input-padding: 0.75rem;
+  --spacing-base: 1rem;
+}
+
+body.density-medium {
+  --content-padding: 1.25rem;
+  --card-padding: 1rem;
+  --input-padding: 0.625rem;
+  --spacing-base: 0.875rem;
+}
+
+body.density-dense {
+  --content-padding: 1rem;
+  --card-padding: 0.75rem;
+  --input-padding: 0.5rem;
+  --spacing-base: 0.75rem;
+}
+
+body.density-spacious {
+  --content-padding: 2rem;
+  --card-padding: 1.5rem;
+  --input-padding: 0.875rem;
+  --spacing-base: 1.25rem;
+}

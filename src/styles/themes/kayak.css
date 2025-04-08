@@ -1,0 +1,164 @@
+
+/* ===== KAYAK THEME ===== */
+/* Core UX Principles:
+    - Bold colors and strong contrasts
+    - Information density
+    - Feature-rich UI
+    - Emphasis on deals and comparisons
+*/
+[data-theme-variant="kayak"] {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 12%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 12%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 12%;
+  
+  --primary: 84 100% 37%; /* Changed to lime green */
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 84 100% 27%; /* Darker shade of lime green */
+  --secondary-foreground: 0 0% 100%;
+  
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  
+  --accent: 84 100% 47%; /* Lighter shade of lime green */
+  --accent-foreground: 0 0% 12%;
+  
+  --destructive: 0 100% 65%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 84 100% 37%; /* Changed to lime green */
+  
+  --radius: 0.375rem;
+  
+  /* Sidebar specific colors */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 0 0% 12%;
+  --sidebar-primary: 84 100% 37%; /* Changed to lime green */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 84 100% 37%; /* Changed to lime green */
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 84 100% 37%; /* Changed to lime green */
+}
+
+[data-theme-variant="kayak"] body {
+  font-family: 'Inter', sans-serif;
+}
+
+[data-theme-variant="kayak"] h1,
+[data-theme-variant="kayak"] h2,
+[data-theme-variant="kayak"] h3,
+[data-theme-variant="kayak"] h4,
+[data-theme-variant="kayak"] h5,
+[data-theme-variant="kayak"] h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+[data-theme-variant="kayak"] .hero-section {
+  @apply bg-[#7CBB00] text-white py-10 md:py-14;
+}
+
+[data-theme-variant="kayak"] .cta-button {
+  @apply bg-[#7CBB00] hover:bg-[#6BA300] text-white rounded-md font-bold uppercase tracking-wide px-6 py-3;
+}
+
+[data-theme-variant="kayak"] .btn-primary {
+  @apply bg-[#7CBB00] hover:bg-[#6BA300] text-white rounded-md font-bold uppercase tracking-wide;
+}
+
+[data-theme-variant="kayak"] .btn-secondary {
+  @apply bg-white text-[#7CBB00] hover:bg-gray-50 ring-1 ring-[#7CBB00] rounded-md font-bold uppercase tracking-wide;
+}
+
+[data-theme-variant="kayak"] .btn-accent {
+  @apply bg-[#1c6ccc] text-white hover:bg-[#1c6ccc]/90 rounded-md font-bold uppercase tracking-wide;
+}
+
+[data-theme-variant="kayak"] .search-input {
+  @apply focus:ring-[#7CBB00] border border-gray-300 rounded-md p-2.5 pl-10;
+}
+
+[data-theme-variant="kayak"] .search-form {
+  @apply shadow-lg rounded-lg overflow-hidden border-2 border-gray-200;
+}
+
+[data-theme-variant="kayak"] .content-section {
+  @apply py-10 md:py-14;
+}
+
+[data-theme-variant="kayak"] .accent-section {
+  @apply bg-[#7CBB00]/10;
+}
+
+[data-theme-variant="kayak"] .card {
+  @apply shadow-lg rounded-lg border border-gray-200 overflow-hidden;
+}
+
+[data-theme-variant="kayak"] .nav-link {
+  @apply text-gray-800 hover:text-[#7CBB00] font-semibold transition-colors uppercase text-sm tracking-wide;
+}
+
+[data-theme-variant="kayak"] .listing-card {
+  @apply shadow border border-gray-200 hover:shadow-lg rounded-md;
+}
+
+[data-theme-variant="kayak"] .listing-grid {
+  @apply grid gap-3;
+}
+
+[data-theme-variant="kayak"] .form-input {
+  @apply rounded-md border-2 border-gray-300 focus:ring-2 focus:ring-[#7CBB00] focus:border-[#7CBB00];
+}
+
+[data-theme-variant="kayak"] .section-title {
+  @apply text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide;
+}
+
+[data-theme-variant="kayak"] .footer {
+  @apply bg-[#212121] text-white pt-12 pb-6;
+}
+
+/* Kayak-specific component - Deal badge */
+[data-theme-variant="kayak"] .deal-badge {
+  @apply absolute top-2 right-2 bg-[#7CBB00] text-white font-bold text-xs px-2 py-1 rounded uppercase tracking-wide;
+}
+
+/* Kayak-specific component - Comparison table */
+[data-theme-variant="kayak"] .comparison-table {
+  @apply w-full border-2 border-gray-300 rounded-md overflow-hidden;
+}
+
+[data-theme-variant="kayak"] .comparison-header {
+  @apply bg-gray-100 font-bold text-gray-800 uppercase text-xs p-2 border-b border-gray-300;
+}
+
+[data-theme-variant="kayak"] .comparison-cell {
+  @apply p-2 border-b border-r border-gray-300 text-sm;
+}
+
+[data-theme-variant="kayak"] .comparison-highlight {
+  @apply bg-yellow-50 font-bold;
+}
+
+/* Kayak-specific component - Filter sidebar */
+[data-theme-variant="kayak"] .filter-sidebar {
+  @apply bg-white p-4 border-2 border-gray-200 rounded-md;
+}
+
+[data-theme-variant="kayak"] .filter-group {
+  @apply mb-4 border-b border-gray-200 pb-3;
+}
+
+[data-theme-variant="kayak"] .filter-title {
+  @apply font-bold text-sm uppercase mb-2 tracking-wide;
+}

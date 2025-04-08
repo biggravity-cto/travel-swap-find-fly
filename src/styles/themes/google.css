@@ -1,0 +1,146 @@
+
+/* ===== GOOGLE MATERIAL THEME ===== */
+/* Core UX Principles:
+    - Material Design guidelines
+    - Card-based UI with clear hierarchy
+    - Interactive elements with subtle feedback
+    - Elevation and shadows for depth
+*/
+[data-theme-variant="google"] {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  
+  --primary: 217 89% 61%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 78 99% 43%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 240 3.8% 46.1%;
+  
+  --accent: 4 90% 58%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 217 89% 61%;
+  
+  --radius: 0.25rem;
+  
+  /* Sidebar specific colors */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 10% 3.9%;
+  --sidebar-primary: 217 89% 61%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 217 89% 61%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 240 5.9% 90%;
+  --sidebar-ring: 217 89% 61%;
+}
+
+[data-theme-variant="google"] body {
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+[data-theme-variant="google"] h1,
+[data-theme-variant="google"] h2,
+[data-theme-variant="google"] h3,
+[data-theme-variant="google"] h4,
+[data-theme-variant="google"] h5,
+[data-theme-variant="google"] h6 {
+  font-family: 'Product Sans', 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+[data-theme-variant="google"] .hero-section {
+  @apply bg-[#4285F4] text-white py-12 md:py-16;
+}
+
+[data-theme-variant="google"] .cta-button {
+  @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-[4px] shadow-md px-6 py-3 font-medium;
+}
+
+[data-theme-variant="google"] .btn-primary {
+  @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-[4px] shadow-md;
+}
+
+[data-theme-variant="google"] .btn-secondary {
+  @apply bg-white text-[#4285F4] hover:bg-gray-50 ring-1 ring-[#4285F4] rounded-[4px];
+}
+
+[data-theme-variant="google"] .btn-accent {
+  @apply bg-[#0F9D58] text-white hover:bg-[#0F9D58]/90 rounded-[4px] shadow-md;
+}
+
+[data-theme-variant="google"] .search-input {
+  @apply focus:ring-[#4285F4] shadow-sm rounded-[4px] p-4 pl-10;
+}
+
+[data-theme-variant="google"] .search-form {
+  @apply shadow-md rounded-[4px] overflow-hidden;
+}
+
+[data-theme-variant="google"] .content-section {
+  @apply py-12 md:py-16;
+}
+
+[data-theme-variant="google"] .accent-section {
+  @apply bg-[#E8F0FE];
+}
+
+[data-theme-variant="google"] .card {
+  @apply shadow-md rounded-[4px] overflow-hidden;
+}
+
+[data-theme-variant="google"] .nav-link {
+  @apply text-gray-700 hover:text-[#4285F4] transition-colors;
+}
+
+[data-theme-variant="google"] .listing-card {
+  @apply shadow-md hover:shadow-lg rounded-[4px];
+}
+
+[data-theme-variant="google"] .listing-grid {
+  @apply grid gap-4;
+}
+
+[data-theme-variant="google"] .form-input {
+  @apply rounded-[4px] border border-gray-300 focus:ring-2 focus:ring-[#4285F4] focus:border-transparent;
+}
+
+[data-theme-variant="google"] .section-title {
+  @apply text-[22px] font-normal text-gray-800 mb-4;
+}
+
+[data-theme-variant="google"] .chip {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800 mr-2 mb-2;
+}
+
+[data-theme-variant="google"] .footer {
+  @apply bg-gray-100 text-gray-700 pt-12 pb-6;
+}
+
+/* Google-specific component - Floating action button */
+[data-theme-variant="google"] .fab {
+  @apply fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#4285F4] text-white flex items-center justify-center shadow-lg hover:bg-[#3367D6] transition-colors z-10;
+}
+
+/* Google-specific component - Bottom navigation */
+[data-theme-variant="google"] .bottom-nav {
+  @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center py-2 px-4 md:hidden z-10;
+}
+
+[data-theme-variant="google"] .bottom-nav-item {
+  @apply flex flex-col items-center text-gray-600 hover:text-[#4285F4] py-1;
+}

@@ -1,0 +1,146 @@
+
+/* ===== APPLE THEME ===== */
+/* Core UX Principles:
+    - Minimalist interface
+    - Focus on typography and space
+    - Reduced UI elements
+    - Subtle animations and transitions
+*/
+[data-theme-variant="apple"] {
+  --background: 0 0% 98%;
+  --foreground: 0 0% 0%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 0% 93%;
+  --secondary-foreground: 0 0% 0%;
+  
+  --muted: 0 0% 93%;
+  --muted-foreground: 0 0% 45%;
+  
+  --accent: 204 100% 47%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 0%;
+  
+  --radius: 1rem;
+  
+  /* Sidebar specific colors */
+  --sidebar-background: 0 0% 96%;
+  --sidebar-foreground: 0 0% 0%;
+  --sidebar-primary: 0 0% 0%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 204 100% 47%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 0 0% 90%;
+  --sidebar-ring: 0 0% 0%;
+}
+
+[data-theme-variant="apple"] body,
+[data-theme-variant="apple"] h1,
+[data-theme-variant="apple"] h2,
+[data-theme-variant="apple"] h3,
+[data-theme-variant="apple"] h4,
+[data-theme-variant="apple"] h5,
+[data-theme-variant="apple"] h6 {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+[data-theme-variant="apple"] .hero-section {
+  @apply bg-black text-white py-24 md:py-32;
+}
+
+[data-theme-variant="apple"] .cta-button {
+  @apply bg-[#0071e3] text-white hover:bg-[#0077ED] rounded-full shadow-none px-8 py-3 font-medium;
+}
+
+[data-theme-variant="apple"] .btn-primary {
+  @apply bg-black hover:bg-gray-800 text-white rounded-full shadow-none;
+}
+
+[data-theme-variant="apple"] .btn-secondary {
+  @apply bg-[#f5f5f7] text-black hover:bg-[#e8e8ed] border-0 ring-0 rounded-full;
+}
+
+[data-theme-variant="apple"] .btn-accent {
+  @apply bg-[#0071e3] text-white hover:bg-[#0077ED] rounded-full shadow-none;
+}
+
+[data-theme-variant="apple"] .search-input {
+  @apply focus:ring-black rounded-full bg-[#f5f5f7] border-0 px-4 py-3 pl-10;
+}
+
+[data-theme-variant="apple"] .search-form {
+  @apply shadow-sm rounded-2xl overflow-hidden border border-gray-100 bg-white;
+}
+
+[data-theme-variant="apple"] .content-section {
+  @apply py-24 md:py-32;
+}
+
+[data-theme-variant="apple"] .accent-section {
+  @apply bg-black text-white;
+}
+
+[data-theme-variant="apple"] .card {
+  @apply shadow-sm rounded-2xl overflow-hidden border-0;
+}
+
+[data-theme-variant="apple"] .nav-link {
+  @apply text-black/80 hover:text-black transition-colors;
+}
+
+[data-theme-variant="apple"] .listing-card {
+  @apply shadow-sm hover:shadow rounded-2xl border-0;
+}
+
+[data-theme-variant="apple"] .listing-grid {
+  @apply grid gap-6;
+}
+
+[data-theme-variant="apple"] .form-input {
+  @apply rounded-full border-0 bg-[#f5f5f7] focus:ring-2 focus:ring-black;
+}
+
+[data-theme-variant="apple"] .section-title {
+  @apply text-3xl font-semibold text-black mb-8 tracking-tight;
+}
+
+[data-theme-variant="apple"] .footer {
+  @apply bg-[#F5F5F7] text-gray-500 pt-16 pb-8;
+}
+
+/* Apple-specific component - Pill selector */
+[data-theme-variant="apple"] .pill-selector {
+  @apply flex space-x-2 p-1 bg-[#f5f5f7] rounded-full w-fit mx-auto mb-6;
+}
+
+[data-theme-variant="apple"] .pill-option {
+  @apply px-4 py-1.5 rounded-full text-sm font-medium text-black/70;
+}
+
+[data-theme-variant="apple"] .pill-option-active {
+  @apply bg-white text-black shadow-sm;
+}
+
+/* Apple-specific component - Large card */
+[data-theme-variant="apple"] .feature-card {
+  @apply rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 relative;
+}
+
+[data-theme-variant="apple"] .feature-card-content {
+  @apply absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent text-white;
+}

@@ -1,0 +1,53 @@
+
+/* Google font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;500;700&display=swap');
+
+/* Apple font - San Francisco alternative */
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+
+/* ===== DEFAULT THEME - TransferTravel ===== */
+/* Core UX Principles:
+    - Balance between form and function
+    - Travel-centric elements
+    - Professional but approachable
+*/
+[data-theme-variant="default"] .search-form {
+  @apply rounded-lg shadow-md overflow-hidden;
+}
+
+[data-theme-variant="default"] .listing-grid {
+  @apply grid gap-6;
+}
+
+[data-theme-variant="default"] .listing-card {
+  @apply bg-white rounded-lg shadow hover:shadow-md transition-all duration-200;
+}
+
+[data-theme-variant="default"] .form-input {
+  @apply rounded-md border border-gray-200 focus:ring-2 focus:ring-tt-blue focus:border-transparent;
+}
+
+[data-theme-variant="default"] .section-title {
+  @apply text-2xl font-semibold text-tt-blue-dark mb-6;
+}
+
+[data-theme-variant="default"] .hero-section {
+  @apply bg-gradient-to-br from-tt-blue to-tt-blue-dark text-white;
+}
+
+[data-theme-variant="default"] .cta-button {
+  @apply bg-tt-teal text-white hover:bg-tt-teal/90 font-medium rounded-md px-6 py-3;
+}
+
+[data-theme-variant="default"] .content-section {
+  @apply py-16 md:py-24;
+}
+
+[data-theme-variant="default"] .accent-section {
+  @apply bg-tt-teal/10;
+}
+
+[data-theme-variant="default"] .footer {
+  @apply bg-tt-blue-dark text-white pt-16 pb-8;
+}

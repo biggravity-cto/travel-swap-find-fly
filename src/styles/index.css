@@ -1,0 +1,10 @@
+
+/* Import base styles */
+@import './themes/base.css';
+@import './themes/density.css';
+
+/* Import theme-specific styles */
+@import './themes/default.css';
+@import './themes/google.css'; 
+@import './themes/apple.css';
+@import './themes/kayak.css';
