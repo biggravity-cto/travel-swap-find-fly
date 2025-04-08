@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
 /* Google font */
-@import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;500;700&display=swap');
 
 /* Apple font - San Francisco alternative */
 @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
@@ -94,7 +95,7 @@
     --sidebar-ring: var(--ring);
   }
   
-  /* Google theme */
+  /* Google theme - Material Design-inspired */
   [data-theme-variant="google"] {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
@@ -124,7 +125,7 @@
     --input: 240 5.9% 90%;
     --ring: 217 89% 61%;
     
-    --radius: 0.5rem;
+    --radius: 0.25rem;
     
     /* Sidebar specific colors */
     --sidebar-background: 0 0% 98%;
@@ -137,7 +138,7 @@
     --sidebar-ring: 217 89% 61%;
   }
   
-  /* Apple theme */
+  /* Apple theme - Minimal, elegant */
   [data-theme-variant="apple"] {
     --background: 0 0% 98%;
     --foreground: 0 0% 0%;
@@ -180,7 +181,7 @@
     --sidebar-ring: 0 0% 0%;
   }
   
-  /* Kayak theme */
+  /* Kayak theme - Bold, vibrant travel site */
   [data-theme-variant="kayak"] {
     --background: 0 0% 100%;
     --foreground: 0 0% 12%;
@@ -210,7 +211,7 @@
     --input: 220 13% 91%;
     --ring: 24 100% 53%;
     
-    --radius: 0.5rem;
+    --radius: 0.375rem;
     
     /* Sidebar specific colors */
     --sidebar-background: 0 0% 98%;
@@ -240,6 +241,7 @@
   /* Theme-specific font overrides */
   [data-theme-variant="google"] body {
     font-family: 'Roboto', sans-serif;
+    letter-spacing: 0.01em;
   }
   
   [data-theme-variant="google"] h1,
@@ -249,6 +251,7 @@
   [data-theme-variant="google"] h5,
   [data-theme-variant="google"] h6 {
     font-family: 'Product Sans', 'Roboto', sans-serif;
+    font-weight: 400;
   }
   
   [data-theme-variant="apple"] body,
@@ -274,6 +277,37 @@
   [data-theme-variant="kayak"] h6 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Density adjustments */
+  body.density-comfortable {
+    --content-padding: 1.5rem;
+    --card-padding: 1.25rem;
+    --input-padding: 0.75rem;
+    --spacing-base: 1rem;
+  }
+  
+  body.density-medium {
+    --content-padding: 1.25rem;
+    --card-padding: 1rem;
+    --input-padding: 0.625rem;
+    --spacing-base: 0.875rem;
+  }
+  
+  body.density-dense {
+    --content-padding: 1rem;
+    --card-padding: 0.75rem;
+    --input-padding: 0.5rem;
+    --spacing-base: 0.75rem;
+  }
+  
+  body.density-spacious {
+    --content-padding: 2rem;
+    --card-padding: 1.5rem;
+    --input-padding: 0.875rem;
+    --spacing-base: 1.25rem;
   }
 }
 
@@ -288,6 +322,7 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
   
+  /* Default Theme - TransferTravel styling */
   .listing-card {
     @apply bg-white rounded-lg shadow transition-all hover:shadow-md overflow-hidden;
   }
@@ -320,27 +355,61 @@
     @apply bg-tt-teal text-white hover:bg-tt-teal/90 transition-colors font-medium rounded-md;
   }
   
-  /* ===== DEFAULT THEME - No overrides needed ===== */
+  /* ===== DEFAULT THEME - TransferTravel ===== */
+  /* Core UX Principles:
+     - Balance between form and function
+     - Travel-centric elements
+     - Professional but approachable
+  */
+  [data-theme-variant="default"] .search-form {
+    @apply rounded-lg shadow-md overflow-hidden;
+  }
+  
+  [data-theme-variant="default"] .listing-grid {
+    @apply grid gap-6;
+  }
+  
+  [data-theme-variant="default"] .listing-card {
+    @apply bg-white rounded-lg shadow hover:shadow-md transition-all duration-200;
+  }
+  
+  [data-theme-variant="default"] .form-input {
+    @apply rounded-md border border-gray-200 focus:ring-2 focus:ring-tt-blue focus:border-transparent;
+  }
+  
+  [data-theme-variant="default"] .section-title {
+    @apply text-2xl font-semibold text-tt-blue-dark mb-6;
+  }
   
   /* ===== GOOGLE MATERIAL THEME ===== */
+  /* Core UX Principles:
+     - Material Design guidelines
+     - Card-based UI with clear hierarchy
+     - Interactive elements with subtle feedback
+     - Elevation and shadows for depth
+  */
   [data-theme-variant="google"] .btn-primary {
-    @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-md shadow-md;
+    @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-[4px] shadow-md;
   }
   
   [data-theme-variant="google"] .btn-secondary {
-    @apply bg-white text-[#4285F4] hover:bg-gray-50 ring-1 ring-[#4285F4] rounded-md;
+    @apply bg-white text-[#4285F4] hover:bg-gray-50 ring-1 ring-[#4285F4] rounded-[4px];
   }
   
   [data-theme-variant="google"] .btn-accent {
-    @apply bg-[#0F9D58] text-white hover:bg-[#0F9D58]/90 rounded-md shadow-md;
+    @apply bg-[#0F9D58] text-white hover:bg-[#0F9D58]/90 rounded-[4px] shadow-md;
   }
   
   [data-theme-variant="google"] .search-input {
-    @apply focus:ring-[#4285F4] shadow-sm;
+    @apply focus:ring-[#4285F4] shadow-sm rounded-[4px] p-4 pl-10;
+  }
+  
+  [data-theme-variant="google"] .search-form {
+    @apply shadow-md rounded-[4px] overflow-hidden;
   }
   
   [data-theme-variant="google"] .card {
-    @apply shadow-md rounded-md overflow-hidden;
+    @apply shadow-md rounded-[4px] overflow-hidden;
   }
   
   [data-theme-variant="google"] .nav-link {
@@ -348,14 +417,46 @@
   }
   
   [data-theme-variant="google"] .listing-card {
-    @apply shadow-md hover:shadow-lg;
+    @apply shadow-md hover:shadow-lg rounded-[4px];
   }
   
-  [data-theme-variant="google"] header {
-    @apply shadow;
+  [data-theme-variant="google"] .listing-grid {
+    @apply grid gap-4;
+  }
+  
+  [data-theme-variant="google"] .form-input {
+    @apply rounded-[4px] border border-gray-300 focus:ring-2 focus:ring-[#4285F4] focus:border-transparent;
+  }
+  
+  [data-theme-variant="google"] .section-title {
+    @apply text-[22px] font-normal text-gray-800 mb-4;
+  }
+  
+  [data-theme-variant="google"] .chip {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800 mr-2 mb-2;
+  }
+  
+  /* Google-specific component - Floating action button */
+  [data-theme-variant="google"] .fab {
+    @apply fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#4285F4] text-white flex items-center justify-center shadow-lg hover:bg-[#3367D6] transition-colors z-10;
+  }
+  
+  /* Google-specific component - Bottom navigation */
+  [data-theme-variant="google"] .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center py-2 px-4 md:hidden z-10;
+  }
+  
+  [data-theme-variant="google"] .bottom-nav-item {
+    @apply flex flex-col items-center text-gray-600 hover:text-[#4285F4] py-1;
   }
   
   /* ===== APPLE THEME ===== */
+  /* Core UX Principles:
+     - Minimalist interface
+     - Focus on typography and space
+     - Reduced UI elements
+     - Subtle animations and transitions
+  */
   [data-theme-variant="apple"] .btn-primary {
     @apply bg-black hover:bg-gray-800 text-white rounded-full shadow-none;
   }
@@ -369,11 +470,15 @@
   }
   
   [data-theme-variant="apple"] .search-input {
-    @apply focus:ring-black rounded-full bg-[#f5f5f7] border-0;
+    @apply focus:ring-black rounded-full bg-[#f5f5f7] border-0 px-4 py-3 pl-10;
+  }
+  
+  [data-theme-variant="apple"] .search-form {
+    @apply shadow-sm rounded-2xl overflow-hidden border border-gray-100 bg-white;
   }
   
   [data-theme-variant="apple"] .card {
-    @apply shadow-sm rounded-2xl overflow-hidden;
+    @apply shadow-sm rounded-2xl overflow-hidden border-0;
   }
   
   [data-theme-variant="apple"] .nav-link {
@@ -381,28 +486,68 @@
   }
   
   [data-theme-variant="apple"] .listing-card {
-    @apply shadow-sm hover:shadow rounded-2xl;
+    @apply shadow-sm hover:shadow rounded-2xl border-0;
   }
   
-  [data-theme-variant="apple"] header {
-    @apply shadow-none border-b border-gray-200/80;
+  [data-theme-variant="apple"] .listing-grid {
+    @apply grid gap-6;
+  }
+  
+  [data-theme-variant="apple"] .form-input {
+    @apply rounded-full border-0 bg-[#f5f5f7] focus:ring-2 focus:ring-black;
+  }
+  
+  [data-theme-variant="apple"] .section-title {
+    @apply text-3xl font-semibold text-black mb-8 tracking-tight;
+  }
+  
+  /* Apple-specific component - Pill selector */
+  [data-theme-variant="apple"] .pill-selector {
+    @apply flex space-x-2 p-1 bg-[#f5f5f7] rounded-full w-fit mx-auto mb-6;
+  }
+  
+  [data-theme-variant="apple"] .pill-option {
+    @apply px-4 py-1.5 rounded-full text-sm font-medium text-black/70;
+  }
+  
+  [data-theme-variant="apple"] .pill-option-active {
+    @apply bg-white text-black shadow-sm;
+  }
+  
+  /* Apple-specific component - Large card */
+  [data-theme-variant="apple"] .feature-card {
+    @apply rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 relative;
+  }
+  
+  [data-theme-variant="apple"] .feature-card-content {
+    @apply absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent text-white;
   }
   
   /* ===== KAYAK THEME ===== */
+  /* Core UX Principles:
+     - Bold colors and strong contrasts
+     - Information density
+     - Feature-rich UI
+     - Emphasis on deals and comparisons
+  */
   [data-theme-variant="kayak"] .btn-primary {
-    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold;
+    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold uppercase tracking-wide;
   }
   
   [data-theme-variant="kayak"] .btn-secondary {
-    @apply bg-white text-[#FF690F] hover:bg-gray-50 ring-1 ring-[#FF690F] rounded-md font-bold;
+    @apply bg-white text-[#FF690F] hover:bg-gray-50 ring-1 ring-[#FF690F] rounded-md font-bold uppercase tracking-wide;
   }
   
   [data-theme-variant="kayak"] .btn-accent {
-    @apply bg-[#1c6ccc] text-white hover:bg-[#1c6ccc]/90 rounded-md font-bold;
+    @apply bg-[#1c6ccc] text-white hover:bg-[#1c6ccc]/90 rounded-md font-bold uppercase tracking-wide;
   }
   
   [data-theme-variant="kayak"] .search-input {
-    @apply focus:ring-[#FF690F] border border-gray-300;
+    @apply focus:ring-[#FF690F] border border-gray-300 rounded-md p-2.5 pl-10;
+  }
+  
+  [data-theme-variant="kayak"] .search-form {
+    @apply shadow-lg rounded-lg overflow-hidden border-2 border-gray-200;
   }
   
   [data-theme-variant="kayak"] .card {
@@ -410,15 +555,58 @@
   }
   
   [data-theme-variant="kayak"] .nav-link {
-    @apply text-gray-800 hover:text-[#FF690F] font-semibold transition-colors;
+    @apply text-gray-800 hover:text-[#FF690F] font-semibold transition-colors uppercase text-sm tracking-wide;
   }
   
   [data-theme-variant="kayak"] .listing-card {
-    @apply shadow border border-gray-200 hover:shadow-lg;
+    @apply shadow border border-gray-200 hover:shadow-lg rounded-md;
   }
   
-  [data-theme-variant="kayak"] header {
-    @apply shadow-md;
+  [data-theme-variant="kayak"] .listing-grid {
+    @apply grid gap-3;
+  }
+  
+  [data-theme-variant="kayak"] .form-input {
+    @apply rounded-md border-2 border-gray-300 focus:ring-2 focus:ring-[#FF690F] focus:border-[#FF690F];
+  }
+  
+  [data-theme-variant="kayak"] .section-title {
+    @apply text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide;
+  }
+  
+  /* Kayak-specific component - Deal badge */
+  [data-theme-variant="kayak"] .deal-badge {
+    @apply absolute top-2 right-2 bg-[#FF690F] text-white font-bold text-xs px-2 py-1 rounded uppercase tracking-wide;
+  }
+  
+  /* Kayak-specific component - Comparison table */
+  [data-theme-variant="kayak"] .comparison-table {
+    @apply w-full border-2 border-gray-300 rounded-md overflow-hidden;
+  }
+  
+  [data-theme-variant="kayak"] .comparison-header {
+    @apply bg-gray-100 font-bold text-gray-800 uppercase text-xs p-2 border-b border-gray-300;
+  }
+  
+  [data-theme-variant="kayak"] .comparison-cell {
+    @apply p-2 border-b border-r border-gray-300 text-sm;
+  }
+  
+  [data-theme-variant="kayak"] .comparison-highlight {
+    @apply bg-yellow-50 font-bold;
+  }
+  
+  /* Kayak-specific component - Filter sidebar */
+  [data-theme-variant="kayak"] .filter-sidebar {
+    @apply bg-white p-4 border-2 border-gray-200 rounded-md;
+  }
+  
+  [data-theme-variant="kayak"] .filter-group {
+    @apply mb-4 border-b border-gray-200 pb-3;
+  }
+  
+  [data-theme-variant="kayak"] .filter-title {
+    @apply font-bold text-sm uppercase mb-2 tracking-wide;
   }
   
   /* Animation classes that can be used across themes */
@@ -428,5 +616,10 @@
   
   .animate-pulse-light {
     @apply animate-pulse-light;
+  }
+  
+  /* Theme transition effect */
+  .theme-transition {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 }

@@ -18,6 +18,46 @@ export const useTheme = () => {
   return context;
 };
 
+// Brand-specific values and philosophy descriptions for each theme
+export const themeInfo = {
+  default: {
+    name: 'TransferTravel',
+    description: 'Balanced, travel-focused experience',
+    brandColor: '#0E7490',
+    fontFamily: 'Montserrat, sans-serif',
+    borderRadius: '0.5rem',
+    density: 'medium',
+    philosophy: 'Balancing form and function for modern travelers',
+  },
+  google: {
+    name: 'Material Design',
+    description: 'Clean, functional, data-driven',
+    brandColor: '#4285F4',
+    fontFamily: 'Roboto, sans-serif',
+    borderRadius: '0.5rem',
+    density: 'comfortable',
+    philosophy: 'Function-first with accessible, intuitive interfaces',
+  },
+  apple: {
+    name: 'Apple Style',
+    description: 'Premium, minimalist, elegant',
+    brandColor: '#000000',
+    fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif',
+    borderRadius: '1rem',
+    density: 'spacious',
+    philosophy: 'Experience-first with strong aesthetic consistency',
+  },
+  kayak: {
+    name: 'Kayak',
+    description: 'Bold, vibrant, task-oriented',
+    brandColor: '#FF690F',
+    fontFamily: 'Inter, sans-serif',
+    borderRadius: '0.5rem',
+    density: 'dense',
+    philosophy: 'Task-completion focused with bold engagement hooks',
+  },
+};
+
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<ThemeVariant>(() => {
     // Try to get the theme from localStorage
@@ -39,6 +79,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.body.style.display = 'none';
     document.body.offsetHeight; // Trigger a reflow
     document.body.style.display = '';
+    
+    // Apply theme-specific density class
+    document.body.classList.remove('density-comfortable', 'density-spacious', 'density-dense', 'density-medium');
+    document.body.classList.add(`density-${themeInfo[theme].density}`);
     
   }, [theme]);
 

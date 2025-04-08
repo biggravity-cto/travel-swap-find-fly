@@ -43,16 +43,53 @@ const Logo = ({ variant = 'default', size = 'md', className }: LogoProps) => {
     lg: 32
   };
   
-  // For minimal variant (Apple style)
-  if (variant === 'minimal') {
+  // Google-style logo (colorful, simple)
+  if (theme === 'google') {
     return (
-      <div className={cn('flex items-center font-display font-semibold', sizeClasses[size], textColor, className)}>
-        <Plane className={cn("mr-1.5", iconColor)} size={iconSize[size]} />
-        <span>TT</span>
+      <div className={cn('flex items-center font-display', sizeClasses[size], textColor, className)}>
+        <div className="flex items-center mr-1.5">
+          <div className="relative">
+            <Plane className="text-[#4285F4]" size={iconSize[size]} />
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#EA4335] rounded-full" />
+            <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-[#FBBC05] rounded-full" />
+            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-[#34A853] rounded-full" />
+          </div>
+        </div>
+        <span className="font-medium">
+          <span className="text-[#4285F4]">T</span>
+          <span className="text-[#EA4335]">r</span>
+          <span className="text-[#FBBC05]">a</span>
+          <span className="text-[#4285F4]">v</span>
+          <span className="text-[#34A853]">e</span>
+          <span className="text-[#EA4335]">l</span>
+        </span>
       </div>
     );
   }
   
+  // Apple-style logo (minimal, elegant)
+  if (theme === 'apple' || variant === 'minimal') {
+    return (
+      <div className={cn('flex items-center font-display font-semibold tracking-tight', sizeClasses[size], textColor, className)}>
+        <Plane className={cn("mr-1.5", iconColor)} size={iconSize[size]} />
+        <span className="tracking-tight">TT</span>
+      </div>
+    );
+  }
+  
+  // Kayak-style logo (bold, vibrant)
+  if (theme === 'kayak') {
+    return (
+      <div className={cn('flex items-center font-display font-bold', sizeClasses[size], textColor, className)}>
+        <Plane className={cn("mr-1.5 transform rotate-12", iconColor)} size={iconSize[size]} />
+        <span className="uppercase tracking-wide">
+          Transfer<span className={iconColor}>Travel</span>
+        </span>
+      </div>
+    );
+  }
+  
+  // Default TransferTravel logo
   return (
     <div className={cn('flex items-center font-display font-semibold', sizeClasses[size], textColor, className)}>
       <Plane className={cn("mr-1.5", iconColor)} size={iconSize[size]} />
