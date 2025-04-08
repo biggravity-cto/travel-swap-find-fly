@@ -13,6 +13,7 @@ interface ThemeOption {
   name: string;
   icon: React.ReactNode;
   color: string;
+  description: string;
 }
 
 const ThemeSelector: React.FC = () => {
@@ -23,25 +24,29 @@ const ThemeSelector: React.FC = () => {
       id: 'default', 
       name: 'Default', 
       icon: <Circle className="h-4 w-4" />,
-      color: 'bg-tt-blue'
+      color: 'bg-tt-blue',
+      description: 'TransferTravel default theme'
     },
     { 
       id: 'google', 
       name: 'Google', 
       icon: <LayoutGrid className="h-4 w-4" />,
-      color: 'bg-[#4285F4]'
+      color: 'bg-[#4285F4]',
+      description: 'Material Design inspired'
     },
     { 
       id: 'apple', 
       name: 'Apple', 
       icon: <Apple className="h-4 w-4" />,
-      color: 'bg-[#000000]'
+      color: 'bg-[#000000]',
+      description: 'Clean, minimal design'
     },
     { 
       id: 'kayak', 
       name: 'Kayak', 
       icon: <Compass className="h-4 w-4" />,
-      color: 'bg-[#FF690F]'
+      color: 'bg-[#FF690F]',
+      description: 'Bold, vibrant travel style'
     }
   ];
   
@@ -70,9 +75,11 @@ const ThemeSelector: React.FC = () => {
               theme === themeOption.id ? 'bg-muted' : ''
             }`}
           >
-            {themeOption.icon}
-            <span className="flex-1">{themeOption.name}</span>
             <div className={`w-4 h-4 rounded-full ${themeOption.color}`}></div>
+            <div className="flex flex-col items-start">
+              <span className="font-medium">{themeOption.name}</span>
+              <span className="text-xs text-muted-foreground">{themeOption.description}</span>
+            </div>
           </button>
         ))}
       </div>
@@ -93,9 +100,8 @@ const ThemeSelector: React.FC = () => {
                 theme === themeOption.id ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
               }`}
             >
-              {themeOption.icon}
-              <span className="flex-1">{themeOption.name}</span>
               <div className={`w-4 h-4 rounded-full ${themeOption.color}`}></div>
+              <span className="flex-1">{themeOption.name}</span>
             </button>
           ))}
         </div>

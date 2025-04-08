@@ -42,6 +42,16 @@
     --ring: 187 72% 32%;
 
     --radius: 0.5rem;
+    
+    /* Sidebar specific colors */
+    --sidebar-background: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
   }
 
   .dark {
@@ -72,6 +82,16 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 187 72% 32%;
+    
+    /* Sidebar specific colors */
+    --sidebar-background: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
   }
   
   /* Google theme */
@@ -105,6 +125,16 @@
     --ring: 217 89% 61%;
     
     --radius: 0.5rem;
+    
+    /* Sidebar specific colors */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 10% 3.9%;
+    --sidebar-primary: 217 89% 61%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 89% 61%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-ring: 217 89% 61%;
   }
   
   /* Apple theme */
@@ -138,6 +168,16 @@
     --ring: 0 0% 0%;
     
     --radius: 1rem;
+    
+    /* Sidebar specific colors */
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 0 0% 0%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 204 100% 47%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 0%;
   }
   
   /* Kayak theme */
@@ -171,6 +211,16 @@
     --ring: 24 100% 53%;
     
     --radius: 0.5rem;
+    
+    /* Sidebar specific colors */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 12%;
+    --sidebar-primary: 24 100% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 24 100% 53%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 24 100% 53%;
   }
 }
 
@@ -270,40 +320,113 @@
     @apply bg-tt-teal text-white hover:bg-tt-teal/90 transition-colors font-medium rounded-md;
   }
   
-  /* Theme-specific styling */
+  /* ===== DEFAULT THEME - No overrides needed ===== */
+  
+  /* ===== GOOGLE MATERIAL THEME ===== */
   [data-theme-variant="google"] .btn-primary {
-    @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-md;
+    @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-md shadow-md;
   }
   
   [data-theme-variant="google"] .btn-secondary {
     @apply bg-white text-[#4285F4] hover:bg-gray-50 ring-1 ring-[#4285F4] rounded-md;
   }
   
-  [data-theme-variant="google"] .search-input {
-    @apply focus:ring-[#4285F4];
+  [data-theme-variant="google"] .btn-accent {
+    @apply bg-[#0F9D58] text-white hover:bg-[#0F9D58]/90 rounded-md shadow-md;
   }
   
+  [data-theme-variant="google"] .search-input {
+    @apply focus:ring-[#4285F4] shadow-sm;
+  }
+  
+  [data-theme-variant="google"] .card {
+    @apply shadow-md rounded-md overflow-hidden;
+  }
+  
+  [data-theme-variant="google"] .nav-link {
+    @apply text-gray-700 hover:text-[#4285F4] transition-colors;
+  }
+  
+  [data-theme-variant="google"] .listing-card {
+    @apply shadow-md hover:shadow-lg;
+  }
+  
+  [data-theme-variant="google"] header {
+    @apply shadow;
+  }
+  
+  /* ===== APPLE THEME ===== */
   [data-theme-variant="apple"] .btn-primary {
-    @apply bg-black hover:bg-gray-800 text-white rounded-full;
+    @apply bg-black hover:bg-gray-800 text-white rounded-full shadow-none;
   }
   
   [data-theme-variant="apple"] .btn-secondary {
     @apply bg-[#f5f5f7] text-black hover:bg-[#e8e8ed] border-0 ring-0 rounded-full;
   }
   
-  [data-theme-variant="apple"] .search-input {
-    @apply focus:ring-black rounded-full;
+  [data-theme-variant="apple"] .btn-accent {
+    @apply bg-[#0071e3] text-white hover:bg-[#0077ED] rounded-full shadow-none;
   }
   
+  [data-theme-variant="apple"] .search-input {
+    @apply focus:ring-black rounded-full bg-[#f5f5f7] border-0;
+  }
+  
+  [data-theme-variant="apple"] .card {
+    @apply shadow-sm rounded-2xl overflow-hidden;
+  }
+  
+  [data-theme-variant="apple"] .nav-link {
+    @apply text-black/80 hover:text-black transition-colors;
+  }
+  
+  [data-theme-variant="apple"] .listing-card {
+    @apply shadow-sm hover:shadow rounded-2xl;
+  }
+  
+  [data-theme-variant="apple"] header {
+    @apply shadow-none border-b border-gray-200/80;
+  }
+  
+  /* ===== KAYAK THEME ===== */
   [data-theme-variant="kayak"] .btn-primary {
-    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md;
+    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold;
   }
   
   [data-theme-variant="kayak"] .btn-secondary {
-    @apply bg-white text-[#FF690F] hover:bg-gray-50 ring-1 ring-[#FF690F] rounded-md;
+    @apply bg-white text-[#FF690F] hover:bg-gray-50 ring-1 ring-[#FF690F] rounded-md font-bold;
+  }
+  
+  [data-theme-variant="kayak"] .btn-accent {
+    @apply bg-[#1c6ccc] text-white hover:bg-[#1c6ccc]/90 rounded-md font-bold;
   }
   
   [data-theme-variant="kayak"] .search-input {
-    @apply focus:ring-[#FF690F];
+    @apply focus:ring-[#FF690F] border border-gray-300;
+  }
+  
+  [data-theme-variant="kayak"] .card {
+    @apply shadow-lg rounded-lg border border-gray-200 overflow-hidden;
+  }
+  
+  [data-theme-variant="kayak"] .nav-link {
+    @apply text-gray-800 hover:text-[#FF690F] font-semibold transition-colors;
+  }
+  
+  [data-theme-variant="kayak"] .listing-card {
+    @apply shadow border border-gray-200 hover:shadow-lg;
+  }
+  
+  [data-theme-variant="kayak"] header {
+    @apply shadow-md;
+  }
+  
+  /* Animation classes that can be used across themes */
+  .animate-fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .animate-pulse-light {
+    @apply animate-pulse-light;
   }
 }

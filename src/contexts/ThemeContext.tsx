@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type ThemeVariant = 'default' | 'google' | 'apple' | 'kayak';
+export type ThemeVariant = 'default' | 'google' | 'apple' | 'kayak';
 
 interface ThemeContextType {
   theme: ThemeVariant;
