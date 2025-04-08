@@ -3,11 +3,6 @@ import React from 'react';
 import { Circle, Apple, LayoutGrid, Compass } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { 
   SidebarGroup, 
   SidebarGroupLabel, 
   SidebarGroupContent 
@@ -57,36 +52,53 @@ const ThemeSelector: React.FC = () => {
     setTheme(themeId as any);
   };
   
+  // Check if we're inside a sidebar (look for parent elements with data-sidebar attribute)
+  const isInsideSidebar = () => {
+    const sidebarElements = document.querySelectorAll('[data-sidebar]');
+    return sidebarElements.length > 0;
+  };
+  
+  // If inside the header, we'll render a simpler version
+  if (!isInsideSidebar()) {
+    return (
+      <div className="grid gap-1 p-2">
+        {themes.map((themeOption) => (
+          <button
+            key={themeOption.id}
+            onClick={() => handleThemeChange(themeOption.id)}
+            className={`flex items-center gap-2 w-full rounded-md p-2 text-sm hover:bg-muted ${
+              theme === themeOption.id ? 'bg-muted' : ''
+            }`}
+          >
+            {themeOption.icon}
+            <span className="flex-1">{themeOption.name}</span>
+            <div className={`w-4 h-4 rounded-full ${themeOption.color}`}></div>
+          </button>
+        ))}
+      </div>
+    );
+  }
+  
+  // Original sidebar version
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Theme</SidebarGroupLabel>
       <SidebarGroupContent>
-        <Popover>
-          <PopoverTrigger asChild>
-            <button className="flex items-center gap-2 w-full rounded-md p-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm">
-              {activeTheme.icon}
-              <span className="flex-1 text-left">{activeTheme.name}</span>
-              <div className={`w-4 h-4 rounded-full ${activeTheme.color}`}></div>
+        <div className="grid gap-1">
+          {themes.map((themeOption) => (
+            <button
+              key={themeOption.id}
+              onClick={() => handleThemeChange(themeOption.id)}
+              className={`flex items-center gap-2 w-full rounded-md p-2 text-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+                theme === themeOption.id ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
+              }`}
+            >
+              {themeOption.icon}
+              <span className="flex-1">{themeOption.name}</span>
+              <div className={`w-4 h-4 rounded-full ${themeOption.color}`}></div>
             </button>
-          </PopoverTrigger>
-          <PopoverContent className="w-56 p-0" align="start">
-            <div className="grid gap-1 p-2">
-              {themes.map((themeOption) => (
-                <button
-                  key={themeOption.id}
-                  onClick={() => handleThemeChange(themeOption.id)}
-                  className={`flex items-center gap-2 w-full rounded-md p-2 text-sm hover:bg-muted ${
-                    theme === themeOption.id ? 'bg-muted' : ''
-                  }`}
-                >
-                  {themeOption.icon}
-                  <span className="flex-1">{themeOption.name}</span>
-                  <div className={`w-4 h-4 rounded-full ${themeOption.color}`}></div>
-                </button>
-              ))}
-            </div>
-          </PopoverContent>
-        </Popover>
+          ))}
+        </div>
       </SidebarGroupContent>
     </SidebarGroup>
   );
