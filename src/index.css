@@ -322,39 +322,6 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
   
-  /* Default Theme - TransferTravel styling */
-  .listing-card {
-    @apply bg-white rounded-lg shadow transition-all hover:shadow-md overflow-hidden;
-  }
-  
-  .listing-resale-tag {
-    @apply bg-tt-yellow text-tt-black text-xs font-semibold px-2 py-0.5 rounded;
-  }
-  
-  .listing-regular-tag {
-    @apply bg-tt-teal text-white text-xs font-semibold px-2 py-0.5 rounded;
-  }
-  
-  .search-input {
-    @apply bg-white border-0 ring-1 ring-gray-200 focus:ring-2 focus:ring-tt-blue rounded-md p-3 pl-10 text-sm text-gray-800 placeholder-gray-400 w-full transition-all;
-  }
-  
-  .nav-link {
-    @apply text-tt-gray-dark hover:text-tt-blue transition-colors;
-  }
-  
-  .btn-primary {
-    @apply bg-tt-blue text-white hover:bg-tt-blue-dark transition-colors font-medium rounded-md;
-  }
-  
-  .btn-secondary {
-    @apply bg-white text-tt-blue hover:bg-gray-50 transition-colors ring-1 ring-tt-blue font-medium rounded-md;
-  }
-  
-  .btn-accent {
-    @apply bg-tt-teal text-white hover:bg-tt-teal/90 transition-colors font-medium rounded-md;
-  }
-  
   /* ===== DEFAULT THEME - TransferTravel ===== */
   /* Core UX Principles:
      - Balance between form and function
@@ -381,6 +348,26 @@
     @apply text-2xl font-semibold text-tt-blue-dark mb-6;
   }
   
+  [data-theme-variant="default"] .hero-section {
+    @apply bg-gradient-to-br from-tt-blue to-tt-blue-dark text-white;
+  }
+  
+  [data-theme-variant="default"] .cta-button {
+    @apply bg-tt-teal text-white hover:bg-tt-teal/90 font-medium rounded-md px-6 py-3;
+  }
+
+  [data-theme-variant="default"] .content-section {
+    @apply py-16 md:py-24;
+  }
+  
+  [data-theme-variant="default"] .accent-section {
+    @apply bg-tt-teal/10;
+  }
+  
+  [data-theme-variant="default"] .footer {
+    @apply bg-tt-blue-dark text-white pt-16 pb-8;
+  }
+  
   /* ===== GOOGLE MATERIAL THEME ===== */
   /* Core UX Principles:
      - Material Design guidelines
@@ -388,6 +375,14 @@
      - Interactive elements with subtle feedback
      - Elevation and shadows for depth
   */
+  [data-theme-variant="google"] .hero-section {
+    @apply bg-[#4285F4] text-white py-12 md:py-16;
+  }
+  
+  [data-theme-variant="google"] .cta-button {
+    @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-[4px] shadow-md px-6 py-3 font-medium;
+  }
+  
   [data-theme-variant="google"] .btn-primary {
     @apply bg-[#4285F4] hover:bg-[#3367D6] text-white rounded-[4px] shadow-md;
   }
@@ -406,6 +401,14 @@
   
   [data-theme-variant="google"] .search-form {
     @apply shadow-md rounded-[4px] overflow-hidden;
+  }
+  
+  [data-theme-variant="google"] .content-section {
+    @apply py-12 md:py-16;
+  }
+  
+  [data-theme-variant="google"] .accent-section {
+    @apply bg-[#E8F0FE];
   }
   
   [data-theme-variant="google"] .card {
@@ -436,6 +439,10 @@
     @apply inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800 mr-2 mb-2;
   }
   
+  [data-theme-variant="google"] .footer {
+    @apply bg-gray-100 text-gray-700 pt-12 pb-6;
+  }
+  
   /* Google-specific component - Floating action button */
   [data-theme-variant="google"] .fab {
     @apply fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#4285F4] text-white flex items-center justify-center shadow-lg hover:bg-[#3367D6] transition-colors z-10;
@@ -457,6 +464,14 @@
      - Reduced UI elements
      - Subtle animations and transitions
   */
+  [data-theme-variant="apple"] .hero-section {
+    @apply bg-black text-white py-24 md:py-32;
+  }
+  
+  [data-theme-variant="apple"] .cta-button {
+    @apply bg-[#0071e3] text-white hover:bg-[#0077ED] rounded-full shadow-none px-8 py-3 font-medium;
+  }
+  
   [data-theme-variant="apple"] .btn-primary {
     @apply bg-black hover:bg-gray-800 text-white rounded-full shadow-none;
   }
@@ -475,6 +490,14 @@
   
   [data-theme-variant="apple"] .search-form {
     @apply shadow-sm rounded-2xl overflow-hidden border border-gray-100 bg-white;
+  }
+  
+  [data-theme-variant="apple"] .content-section {
+    @apply py-24 md:py-32;
+  }
+  
+  [data-theme-variant="apple"] .accent-section {
+    @apply bg-black text-white;
   }
   
   [data-theme-variant="apple"] .card {
@@ -499,6 +522,10 @@
   
   [data-theme-variant="apple"] .section-title {
     @apply text-3xl font-semibold text-black mb-8 tracking-tight;
+  }
+  
+  [data-theme-variant="apple"] .footer {
+    @apply bg-[#F5F5F7] text-gray-500 pt-16 pb-8;
   }
   
   /* Apple-specific component - Pill selector */
@@ -530,6 +557,14 @@
      - Feature-rich UI
      - Emphasis on deals and comparisons
   */
+  [data-theme-variant="kayak"] .hero-section {
+    @apply bg-[#FF690F] text-white py-10 md:py-14;
+  }
+  
+  [data-theme-variant="kayak"] .cta-button {
+    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold uppercase tracking-wide px-6 py-3;
+  }
+  
   [data-theme-variant="kayak"] .btn-primary {
     @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold uppercase tracking-wide;
   }
@@ -548,6 +583,14 @@
   
   [data-theme-variant="kayak"] .search-form {
     @apply shadow-lg rounded-lg overflow-hidden border-2 border-gray-200;
+  }
+  
+  [data-theme-variant="kayak"] .content-section {
+    @apply py-10 md:py-14;
+  }
+  
+  [data-theme-variant="kayak"] .accent-section {
+    @apply bg-[#FF690F]/10;
   }
   
   [data-theme-variant="kayak"] .card {
@@ -572,6 +615,10 @@
   
   [data-theme-variant="kayak"] .section-title {
     @apply text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide;
+  }
+  
+  [data-theme-variant="kayak"] .footer {
+    @apply bg-[#212121] text-white pt-12 pb-6;
   }
   
   /* Kayak-specific component - Deal badge */

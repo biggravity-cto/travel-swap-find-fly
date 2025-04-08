@@ -20,6 +20,7 @@ interface ThemeOption {
   color: string;
   description: string;
   philosophy: string;
+  marketingTone: string;
 }
 
 const ThemeSelector: React.FC = () => {
@@ -32,7 +33,8 @@ const ThemeSelector: React.FC = () => {
       icon: <Circle className="h-4 w-4" />,
       color: 'bg-tt-blue',
       description: themeInfo.default.description,
-      philosophy: themeInfo.default.philosophy
+      philosophy: themeInfo.default.philosophy,
+      marketingTone: themeInfo.default.marketingTone
     },
     { 
       id: 'google', 
@@ -40,7 +42,8 @@ const ThemeSelector: React.FC = () => {
       icon: <LayoutGrid className="h-4 w-4" />,
       color: 'bg-[#4285F4]',
       description: themeInfo.google.description,
-      philosophy: themeInfo.google.philosophy
+      philosophy: themeInfo.google.philosophy,
+      marketingTone: themeInfo.google.marketingTone
     },
     { 
       id: 'apple', 
@@ -48,7 +51,8 @@ const ThemeSelector: React.FC = () => {
       icon: <Apple className="h-4 w-4" />,
       color: 'bg-[#000000]',
       description: themeInfo.apple.description,
-      philosophy: themeInfo.apple.philosophy
+      philosophy: themeInfo.apple.philosophy,
+      marketingTone: themeInfo.apple.marketingTone
     },
     { 
       id: 'kayak', 
@@ -56,7 +60,8 @@ const ThemeSelector: React.FC = () => {
       icon: <Compass className="h-4 w-4" />,
       color: 'bg-[#FF690F]',
       description: themeInfo.kayak.description,
-      philosophy: themeInfo.kayak.philosophy
+      philosophy: themeInfo.kayak.philosophy,
+      marketingTone: themeInfo.kayak.marketingTone
     }
   ];
   
@@ -97,6 +102,10 @@ const ThemeSelector: React.FC = () => {
               <div className="space-y-2">
                 <h4 className="font-semibold">{themeOption.name} Design Philosophy</h4>
                 <p className="text-sm text-muted-foreground">{themeOption.philosophy}</p>
+                <div className="pt-2 mt-2 border-t border-border">
+                  <h5 className="text-sm font-medium mb-1">Marketing Tone:</h5>
+                  <p className="text-xs text-muted-foreground">{themeOption.marketingTone}</p>
+                </div>
               </div>
             </HoverCardContent>
           </HoverCard>
@@ -128,7 +137,14 @@ const ThemeSelector: React.FC = () => {
                 <div className="space-y-2">
                   <h4 className="font-semibold">{themeOption.name} Design Philosophy</h4>
                   <p className="text-sm text-muted-foreground">{themeOption.philosophy}</p>
-                  <p className="text-xs text-muted-foreground">{themeOption.description}</p>
+                  <div className="pt-2 mt-2 border-t border-border">
+                    <h5 className="text-sm font-medium mb-1">Marketing Tone:</h5>
+                    <p className="text-xs text-muted-foreground">{themeOption.marketingTone}</p>
+                  </div>
+                  <div className="pt-2 mt-2 border-t border-border">
+                    <h5 className="text-sm font-medium mb-1">Visual Style:</h5>
+                    <p className="text-xs text-muted-foreground">{themeOption.description}</p>
+                  </div>
                 </div>
               </HoverCardContent>
             </HoverCard>
