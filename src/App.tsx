@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import Listings from "./pages/Listings";
@@ -35,20 +35,18 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<PageLayout><Index /></PageLayout>} />
-            <Route path="/listings" element={<PageLayout><Listings /></PageLayout>} />
-            <Route path="/rewards" element={<PageLayout><Rewards /></PageLayout>} />
-            <Route path="/sell" element={<PageLayout><SellTravel /></PageLayout>} />
-            <Route path="/flights" element={<PageLayout><Flights /></PageLayout>} />
-            <Route path="/hotels" element={<PageLayout><Hotels /></PageLayout>} />
-            <Route path="/packages" element={<PageLayout><Packages /></PageLayout>} />
-            <Route path="/marketplace" element={<PageLayout><ResaleMarketplace /></PageLayout>} />
-            <Route path="/travel-agent" element={<TravelAgent />} />
-            <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<PageLayout><Index /></PageLayout>} />
+          <Route path="/listings" element={<PageLayout><Listings /></PageLayout>} />
+          <Route path="/rewards" element={<PageLayout><Rewards /></PageLayout>} />
+          <Route path="/sell" element={<PageLayout><SellTravel /></PageLayout>} />
+          <Route path="/flights" element={<PageLayout><Flights /></PageLayout>} />
+          <Route path="/hotels" element={<PageLayout><Hotels /></PageLayout>} />
+          <Route path="/packages" element={<PageLayout><Packages /></PageLayout>} />
+          <Route path="/marketplace" element={<PageLayout><ResaleMarketplace /></PageLayout>} />
+          <Route path="/travel-agent" element={<TravelAgent />} />
+          <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
+        </Routes>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
