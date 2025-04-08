@@ -32,7 +32,7 @@ const SearchButton = () => {
   if (theme === 'kayak') {
     return (
       <div className="pt-2">
-        <Button size="lg" className="w-full md:w-auto bg-[#FF690F] hover:bg-[#e55a00] font-bold uppercase tracking-wide">
+        <Button size="lg" className="w-full md:w-auto bg-[#7CBB00] hover:bg-[#6BA300] font-bold uppercase tracking-wide">
           <Search className="mr-2" size={18} />
           FIND DEALS
         </Button>

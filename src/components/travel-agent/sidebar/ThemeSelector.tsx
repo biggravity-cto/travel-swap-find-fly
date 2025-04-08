@@ -58,7 +58,7 @@ const ThemeSelector: React.FC = () => {
       id: 'kayak', 
       name: themeInfo.kayak.name, 
       icon: <Compass className="h-4 w-4" />,
-      color: 'bg-[#FF690F]',
+      color: 'bg-[#7CBB00]',
       description: themeInfo.kayak.description,
       philosophy: themeInfo.kayak.philosophy,
       marketingTone: themeInfo.kayak.marketingTone

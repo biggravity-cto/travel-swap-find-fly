@@ -98,7 +98,7 @@ export const themeInfo = {
   kayak: {
     name: 'Kayak',
     description: 'Bold, vibrant, task-oriented',
-    brandColor: '#FF690F',
+    brandColor: '#7CBB00', // Changed from #FF690F to lime green
     fontFamily: 'Inter, sans-serif',
     borderRadius: '0.5rem',
     density: 'dense',
@@ -115,8 +115,8 @@ export const themeInfo = {
     sections: {
       primary: 'bg-white',
       secondary: 'bg-gray-100',
-      accent: 'bg-[#FF690F]/10',
-      hero: 'bg-[#FF690F] text-white',
+      accent: 'bg-[#7CBB00]/10',
+      hero: 'bg-[#7CBB00] text-white',
       cta: 'bg-[#1C6CCC] text-white'
     }
   },

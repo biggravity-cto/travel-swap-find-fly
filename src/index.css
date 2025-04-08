@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
 /* Google font */
@@ -192,16 +191,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 12%;
     
-    --primary: 24 100% 53%;
+    --primary: 84 100% 37%; /* Changed to lime green */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 24 100% 43%;
+    --secondary: 84 100% 27%; /* Darker shade of lime green */
     --secondary-foreground: 0 0% 100%;
     
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
     
-    --accent: 24 100% 63%;
+    --accent: 84 100% 47%; /* Lighter shade of lime green */
     --accent-foreground: 0 0% 12%;
     
     --destructive: 0 100% 65%;
@@ -209,19 +208,19 @@
     
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 24 100% 53%;
+    --ring: 84 100% 37%; /* Changed to lime green */
     
     --radius: 0.375rem;
     
     /* Sidebar specific colors */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 12%;
-    --sidebar-primary: 24 100% 53%;
+    --sidebar-primary: 84 100% 37%; /* Changed to lime green */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 24 100% 53%;
+    --sidebar-accent: 84 100% 37%; /* Changed to lime green */
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 24 100% 53%;
+    --sidebar-ring: 84 100% 37%; /* Changed to lime green */
   }
 }
 
@@ -558,19 +557,19 @@
      - Emphasis on deals and comparisons
   */
   [data-theme-variant="kayak"] .hero-section {
-    @apply bg-[#FF690F] text-white py-10 md:py-14;
+    @apply bg-[#7CBB00] text-white py-10 md:py-14;
   }
   
   [data-theme-variant="kayak"] .cta-button {
-    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold uppercase tracking-wide px-6 py-3;
+    @apply bg-[#7CBB00] hover:bg-[#6BA300] text-white rounded-md font-bold uppercase tracking-wide px-6 py-3;
   }
   
   [data-theme-variant="kayak"] .btn-primary {
-    @apply bg-[#FF690F] hover:bg-[#e55a00] text-white rounded-md font-bold uppercase tracking-wide;
+    @apply bg-[#7CBB00] hover:bg-[#6BA300] text-white rounded-md font-bold uppercase tracking-wide;
   }
   
   [data-theme-variant="kayak"] .btn-secondary {
-    @apply bg-white text-[#FF690F] hover:bg-gray-50 ring-1 ring-[#FF690F] rounded-md font-bold uppercase tracking-wide;
+    @apply bg-white text-[#7CBB00] hover:bg-gray-50 ring-1 ring-[#7CBB00] rounded-md font-bold uppercase tracking-wide;
   }
   
   [data-theme-variant="kayak"] .btn-accent {
@@ -578,7 +577,7 @@
   }
   
   [data-theme-variant="kayak"] .search-input {
-    @apply focus:ring-[#FF690F] border border-gray-300 rounded-md p-2.5 pl-10;
+    @apply focus:ring-[#7CBB00] border border-gray-300 rounded-md p-2.5 pl-10;
   }
   
   [data-theme-variant="kayak"] .search-form {
@@ -590,7 +589,7 @@
   }
   
   [data-theme-variant="kayak"] .accent-section {
-    @apply bg-[#FF690F]/10;
+    @apply bg-[#7CBB00]/10;
   }
   
   [data-theme-variant="kayak"] .card {
@@ -598,7 +597,7 @@
   }
   
   [data-theme-variant="kayak"] .nav-link {
-    @apply text-gray-800 hover:text-[#FF690F] font-semibold transition-colors uppercase text-sm tracking-wide;
+    @apply text-gray-800 hover:text-[#7CBB00] font-semibold transition-colors uppercase text-sm tracking-wide;
   }
   
   [data-theme-variant="kayak"] .listing-card {
@@ -610,7 +609,7 @@
   }
   
   [data-theme-variant="kayak"] .form-input {
-    @apply rounded-md border-2 border-gray-300 focus:ring-2 focus:ring-[#FF690F] focus:border-[#FF690F];
+    @apply rounded-md border-2 border-gray-300 focus:ring-2 focus:ring-[#7CBB00] focus:border-[#7CBB00];
   }
   
   [data-theme-variant="kayak"] .section-title {
@@ -623,7 +622,7 @@
   
   /* Kayak-specific component - Deal badge */
   [data-theme-variant="kayak"] .deal-badge {
-    @apply absolute top-2 right-2 bg-[#FF690F] text-white font-bold text-xs px-2 py-1 rounded uppercase tracking-wide;
+    @apply absolute top-2 right-2 bg-[#7CBB00] text-white font-bold text-xs px-2 py-1 rounded uppercase tracking-wide;
   }
   
   /* Kayak-specific component - Comparison table */

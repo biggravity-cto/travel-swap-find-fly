@@ -29,12 +29,12 @@ const getButtonStyles = (theme: string) => {
       };
     case 'kayak':
       return {
-        default: "bg-[#FF690F] text-white hover:bg-[#E55A00] font-bold uppercase tracking-wide",
+        default: "bg-[#7CBB00] text-white hover:bg-[#6BA300] font-bold uppercase tracking-wide",
         destructive: "bg-[#D92800] text-white hover:bg-[#C52300] font-bold uppercase tracking-wide",
         outline: "border-2 border-gray-300 bg-white hover:bg-gray-50 text-gray-800 font-bold uppercase tracking-wide",
         secondary: "bg-[#1C6CCC] text-white hover:bg-[#18509B] font-bold uppercase tracking-wide",
         ghost: "hover:bg-gray-100 text-gray-800 font-bold uppercase tracking-wide",
-        link: "text-[#FF690F] underline-offset-4 hover:underline p-0 h-auto font-bold uppercase tracking-wide",
+        link: "text-[#7CBB00] underline-offset-4 hover:underline p-0 h-auto font-bold uppercase tracking-wide",
         rounded: "rounded-md"
       };
     default:
