@@ -53,6 +53,7 @@ const ThemeSelector: React.FC = () => {
   const activeTheme = themes.find(t => t.id === theme) || themes[0];
   
   const handleThemeChange = (themeId: string) => {
+    console.log(`Attempting to change theme to: ${themeId}`);
     setTheme(themeId as any);
   };
   
